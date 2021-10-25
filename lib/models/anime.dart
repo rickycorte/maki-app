@@ -16,7 +16,7 @@ class Anime {
 
   final String coverUrl;
 
-  final String score;
+  final int score;
 
   final String season;      // eg: SUMMER
   final int year;
