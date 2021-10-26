@@ -17,7 +17,8 @@ class RunnerBody extends StatelessWidget {
       coverUrl: "https://s4.anilist.co/file/anilistcdn/media/anime/cover/large/bx129898-FRUzDtPhRigt.jpg",
       score: 87,
       genres: ["action", "whatever", "raccoons"],
-      year: 2050
+      year: 2050,
+      description: "Racoonz are nasty creatures. They eat your trash, they take over you house. You should be scared!",
   );
 
   RunnerBody({Key? key}) : super(key: key);
