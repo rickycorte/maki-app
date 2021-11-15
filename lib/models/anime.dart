@@ -1,42 +1,58 @@
+import 'dart:convert';
 
 import 'anime_character.dart';
 import 'anime_relation.dart';
 
-class Anime {
+import 'package:http/http.dart' as http;
 
+//Link the app to Maki APi
+
+Future<List<Anime>> fetchRecommendations() async {
+  final response = await http
+      .get(Uri.parse('https://api.makichan.xyz/anime/anilist/xDevily'));
+
+  if (response.statusCode == 200) {
+    // If the server did return a 200 OK response,
+    // then parse the JSON.
+    final jsonData = jsonDecode(response.body);
+
+    List<Anime> recommendations = [];
+
+    print("SONO PRIMA DELL ASSEGNAZIONE DI RECOMMENDATIONS");
+
+    //IL PROBLEMA E' NELL'AGGIUNGERE L'ELEMENTO ALLA LISTA
+
+    recommendations.add(Anime.fromJson(jsonData["reccomendatios"][0]));
+    //print(Anime.fromJson(jsonData["reccomendatios"][0]));
+    //print("Lunghezza lista: ");
+    //print(jsonData["reccomendatios"].length);
+    print("STO FACENDO VEDERE IL RECOMMENDATIONS");
+    print(recommendations);
+
+    for (var rec in jsonData["recommendations"]) {
+      recommendations.add(Anime.fromJson(rec));
+    }
+
+    print("Sono arrivato dopo il FOR da recommendations");
+    return recommendations;
+  } else {
+    // If the server did not return a 200 OK response,
+    // then throw an exception.
+    throw Exception('Failed to load the file');
+  }
+}
+
+class Anime {
   final int malID;
   final int anilistID;
 
   final String title;
-  final String? altTitle;
-
-  final String description;
-
-  final List<String> genres;
 
   final String coverUrl;
 
   final int score;
-
-  final String season;      // eg: SUMMER
   final int year;
-  final String format;      // eg: TV
-  final String airStatus;  // eg: completed
-
-  final int? episodeCount;
-  final int? episodeMinutes;
-
-  final String studio;
-
-  final String rating;
-
-  final String? airStartDate;
-  final String? airFinalDate;
-
-  final List<AnimeRelation>? relations;
-  final List<AnimeCharacter>? characters;
-
-  final String? trailerUrl;
+  final String format; // eg: TV
 
   Anime({
     required this.anilistID,
@@ -44,23 +60,22 @@ class Anime {
     required this.coverUrl,
     required this.score,
     required this.malID,
-    required this.genres,
     required this.year,
-    this.altTitle,
-    this.description = "",
-    this.season = "Unknown",
-    this.format = "Unknown",
-    this.airStatus = "Unknown",
-    this.episodeCount,
-    this.episodeMinutes,
-    this.studio = "Unknown",
-    this.rating = "Unknown",
-    this.airStartDate,
-    this.airFinalDate,
-    this.relations,
-    this.characters,
-    this.trailerUrl
+    required this.format,
   });
+
+  //Save inside the variables the values which come from the API of Maki and Anilist
+
+  factory Anime.fromJson(Map<String, dynamic> json) {
+    return Anime(
+        malID: json['mal'],
+        anilistID: json['anilist'],
+        title: json['title'],
+        coverUrl: json['cover_url'],
+        format: json['format'],
+        year: json['release_year'],
+        score: json['score']);
+  }
 
   //TODO: json constructor
 }

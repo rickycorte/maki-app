@@ -21,8 +21,10 @@ class _CustomBottomBarState extends State<CustomBottomBar> {
         // ignore: prefer_const_constructors
         BottomNavigationBarItem(
             icon: const Icon(Icons.crop_square), title: const Text("For you")),
+        // ignore: prefer_const_constructors
         BottomNavigationBarItem(
             icon: const Icon(Icons.crop_square), title: const Text("My List")),
+        // ignore: prefer_const_constructors
         BottomNavigationBarItem(
             icon: const Icon(Icons.crop_square), title: const Text("Options")),
       ],

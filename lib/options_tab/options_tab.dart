@@ -2,10 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:maki/common/custom_appbar.dart';
 import 'package:maki/common/custom_bottombar.dart';
 
-// Darktheme con i theme di flutter
-// link API to flutter: https://flutter.dev/docs/cookbook/networking/fetch-data
-// gridbar nella cartella common
-
 class opt_tab extends StatelessWidget {
   const opt_tab({Key? key}) : super(key: key);
 
@@ -109,9 +105,9 @@ class userNameScreenState extends State<userNameScreen> {
               ),
             ),
           ),
-          const CustomBottomBar(),
         ]),
       ),
+      bottomNavigationBar: CustomBottomBar(),
     );
   }
 }
