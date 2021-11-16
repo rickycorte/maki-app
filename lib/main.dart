@@ -5,6 +5,7 @@ import 'package:maki/models/anime.dart';
 import 'package:maki/common/anime_cover_grid.dart';
 
 import 'common/custom_appbar.dart';
+import 'common/custom_bottombar.dart';
 
 void main() {
   runApp(MyApp());
@@ -55,39 +56,60 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
 
+  int _selectedPageIndex = 0;
+
+  Widget _futureRecommendationGrid(username) {
+    return FutureBuilder<List<Anime>>(
+        future: fetchRecommendations("xDevily"),
+        builder: (context, snapshot) {
+          if (snapshot.hasError) {
+            return const Center(
+              child: Text('An error has occurred!'),
+            );
+          } else if (snapshot.hasData) {
+            return AnimeCoverGrid(displayData: snapshot.data ?? []);
+          } else {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+        }
+    );
+  }
+
+  Widget _getSelectedTab() {
+    switch(_selectedPageIndex) {
+      case 1:
+        return Text("My list page");
+      case 2:
+        return Text("Options_page");
+      default:
+        return _futureRecommendationGrid("xDevily"); //TODO: cache prev state unless refreshed manually
+    }
+  }
+
+  void _onNavigationTabChange(int index) {
+    setState(() {_selectedPageIndex = index;});
+  }
+
   @override
   Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
+
     return Scaffold(
       appBar: const CustomAppBar(),
-      body: FutureBuilder<List<Anime>>(
-          future: fetchRecommendations("xDevily"),
-          builder: (context, snapshot) {
-            if (snapshot.hasError) {
-              return const Center(
-                child: Text('An error has occurred!'),
-              );
-            } else if (snapshot.hasData) {
-              return AnimeCoverGrid(displayData: snapshot.data ?? []);
-            } else {
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
-            }
-          }
-          /*
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-        */
-          ),
-      // This trailing comma makes auto-formatting nicer for build methods.
+      body: _getSelectedTab(),
+      bottomNavigationBar: BottomNavigationBar(
+        items: const [
+          BottomNavigationBarItem(
+              icon: Icon(Icons.star), label: "For You"),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.list), label: "My List"),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.settings), label: "Options"),
+        ],
+        onTap: _onNavigationTabChange,
+        currentIndex: _selectedPageIndex,
+      ),
     );
   }
 }

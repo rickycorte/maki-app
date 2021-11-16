@@ -15,19 +15,6 @@ class CustomBottomBar extends StatefulWidget implements PreferredSizeWidget {
 class _CustomBottomBarState extends State<CustomBottomBar> {
   @override
   Widget build(BuildContext context) {
-    return BottomNavigationBar(
-      // ignore: prefer_const_literals_to_create_immutables
-      items: [
-        // ignore: prefer_const_constructors
-        BottomNavigationBarItem(
-            icon: const Icon(Icons.crop_square), title: const Text("For you")),
-        // ignore: prefer_const_constructors
-        BottomNavigationBarItem(
-            icon: const Icon(Icons.crop_square), title: const Text("My List")),
-        // ignore: prefer_const_constructors
-        BottomNavigationBarItem(
-            icon: const Icon(Icons.crop_square), title: const Text("Options")),
-      ],
-    );
+    return Text("Togliere");
   }
 }
