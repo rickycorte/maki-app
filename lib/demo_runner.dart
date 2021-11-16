@@ -18,6 +18,7 @@ class RunnerBody extends StatelessWidget {
       score: 87,
       genres: ["action", "whatever", "raccoons"],
       year: 2050,
+      format: "Piscina",
       description: "Racoonz are nasty creatures. They eat your trash, they take over you house. You should be scared!",
   );
 

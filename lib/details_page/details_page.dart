@@ -12,7 +12,7 @@ class AnimeDetailsPage extends StatefulWidget {
 
   AnimeDetailsPage.fromPrefetchedAnime({Key? key, required this.animeData})
       : super(key: key);
-
+  
   @override
   State<AnimeDetailsPage> createState() => _AnimeDetailsPageState();
 }

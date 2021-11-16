@@ -4,6 +4,8 @@ import 'anime_relation.dart';
 
 class Anime {
 
+  final bool isDataComplete;
+
   final int malID;
   final int anilistID;
 
@@ -62,5 +64,15 @@ class Anime {
     this.trailerUrl
   });
 
-  //TODO: json constructor
+
+  Anime.fromAnilistJson(Map<String, dynamic> json) :
+        isDataComplete = false,
+        title = json["..."]
+        ;
+
+  Anime.fromMakiJson(Map<String, dynamic> json) :
+        isDataComplete = true,
+        title = json["..."]
+  ;
+
 }
