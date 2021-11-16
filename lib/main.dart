@@ -57,24 +57,27 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
 
   int _selectedPageIndex = 0;
+  Widget? _cachedRecommendationWidget;
 
   Widget _futureRecommendationGrid(username) {
-    return FutureBuilder<List<Anime>>(
-        future: fetchRecommendations("xDevily"),
-        builder: (context, snapshot) {
-          if (snapshot.hasError) {
-            return const Center(
-              child: Text('An error has occurred!'),
-            );
-          } else if (snapshot.hasData) {
-            return AnimeCoverGrid(displayData: snapshot.data ?? []);
-          } else {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
+    _cachedRecommendationWidget ??= FutureBuilder<List<Anime>>(
+          future: fetchRecommendations("xDevily"),
+          builder: (context, snapshot) {
+            if (snapshot.hasError) {
+              return const Center(
+                child: Text('An error has occurred!'),
+              );
+            } else if (snapshot.hasData) {
+              return AnimeCoverGrid(displayData: snapshot.data ?? []);
+            } else {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            }
           }
-        }
-    );
+      );
+
+    return _cachedRecommendationWidget as Widget;
   }
 
   Widget _getSelectedTab() {
@@ -82,9 +85,9 @@ class _MyHomePageState extends State<MyHomePage> {
       case 1:
         return Text("My list page");
       case 2:
-        return Text("Options_page");
+        return Text("Options page");
       default:
-        return _futureRecommendationGrid("xDevily"); //TODO: cache prev state unless refreshed manually
+        return _futureRecommendationGrid("xDevily");
     }
   }
 
