@@ -4,12 +4,6 @@ import 'package:maki/models/anime.dart';
 import 'models/anime_details.dart';
 
 void main() async {
-  List<Anime> recommendations = await fetchRecommendations();
-
-  for (var rec in recommendations) {
-    print(rec.title);
-  }
-
   runApp(const DemoRunner());
 }
 

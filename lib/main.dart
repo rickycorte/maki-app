@@ -2,10 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:maki/anime_list_tab/anime_list_tab.dart';
 import 'package:maki/options_tab/options_tab.dart';
 import 'package:maki/models/anime.dart';
-import 'package:maki/common/grid_bar.dart';
+import 'package:maki/common/anime_cover_grid.dart';
 
 void main() {
-  print("SONO NEL MAIN PRIMA DEL runAPP");
   runApp(MyApp());
 }
 
@@ -88,7 +87,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 child: Text('An error has occurred!'),
               );
             } else if (snapshot.hasData) {
-              return Text(snapshot.data.toString());
+              return AnimeCoverGrid(displayData: snapshot.data ?? []);
             } else {
               return const Center(
                 child: CircularProgressIndicator(),
