@@ -1,12 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:maki/details_page/details_page.dart';
+import 'package:maki/models/anime.dart';
+import 'models/anime_details.dart';
 
-import 'models/anime.dart';
+void main() async {
+  List<Anime> recommendations = await fetchRecommendations();
 
-void main() {
+  for (var rec in recommendations) {
+    print(rec.title);
+  }
+
   runApp(const DemoRunner());
 }
-
 
 class RunnerBody extends StatelessWidget {
 
@@ -26,21 +31,21 @@ class RunnerBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold (
+    return Scaffold(
         body: ListView(
-          children: [
-            ElevatedButton(
-              child: const Text("Open anime details!"),
-              onPressed: () => {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => AnimeDetailsPage.fromPrefetchedAnime(animeData: sampleAnime) )
-                )
-              },
-            )
-          ],
+      children: [
+        ElevatedButton(
+          child: const Text("Open anime details!"),
+          onPressed: () => {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => AnimeDetailsPage.fromPrefetchedAnime(
+                        animeData: sampleAnime)))
+          },
         )
-    );
+      ],
+    ));
   }
 }
 
@@ -52,11 +57,10 @@ class DemoRunner extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: RunnerBody()
-    );
+        title: 'Flutter Demo',
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+        ),
+        home: RunnerBody());
   }
 }
