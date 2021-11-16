@@ -81,7 +81,7 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text(widget.title),
       ),
       body: FutureBuilder<List<Anime>>(
-          future: fetchRecommendations(),
+          future: fetchRecommendations("xDevily"),
           builder: (context, snapshot) {
             if (snapshot.hasError) {
               return const Center(

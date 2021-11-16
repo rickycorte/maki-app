@@ -15,7 +15,7 @@ void main() async {
 
 class RunnerBody extends StatelessWidget {
 
-  final Anime sampleAnime = Anime(
+  final AnimeDetails sampleAnime = AnimeDetails(
       anilistID: 1,
       malID: 1,
       title: "test anime",
