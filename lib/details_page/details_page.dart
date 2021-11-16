@@ -21,20 +21,15 @@ class AnimeDetailsPage extends StatefulWidget {
 class _AnimeDetailsPageState extends State<AnimeDetailsPage> {
   // build the cover hear line with anime cover + side data
   Widget _buildCoverWithSideInfo() {
-    String scoreText = "SCORE\n" + widget.animeData!.score.toString();
-    String seasonText = "SEASON\n" +
-        widget.animeData!.season +
-        " " +
-        widget.animeData!.year.toString();
-    String formatText = "FORMAT\n" + widget.animeData!.format;
-    if (widget.animeData!.episodeCount != null &&
-        widget.animeData!.episodeMinutes != null) {
-      formatText += " - " + widget.animeData!.episodeCount.toString();
-      formatText +=
-          " eps of " + widget.animeData!.episodeMinutes.toString() + "min";
+    String scoreText = "SCORE\n${widget.animeData!.score}";
+    String seasonText = "SEASON\n${widget.animeData!.season} ${widget.animeData!.year ?? "Unknown year"}" ;
+    String formatText = "FORMAT\n${widget.animeData!.format ?? "Unknown format"}";
+
+    if (widget.animeData!.episodeCount != null && widget.animeData!.episodeMinutes != null) {
+      formatText += " - ${widget.animeData!.episodeCount} eps of ${widget.animeData!.episodeMinutes}min";
     }
 
-    String statusText = "STATUS\n" + widget.animeData!.airStatus;
+    String statusText = "STATUS\n${widget.animeData!.airStatus}";
 
     return IntrinsicHeight(
         child: Row(
