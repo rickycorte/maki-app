@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:maki/common/custom_appbar.dart';
+import 'package:maki/details_page/youtube_embedded.dart';
 import 'package:maki/models/anime_details.dart';
 
 // use a steteful page because we may load anime data later than the actual page so a refresh may be needed
@@ -122,6 +123,11 @@ class _AnimeDetailsPageState extends State<AnimeDetailsPage> {
             const SizedBox(height: elementPadding),
 
             _buildCollapsableDescription(),
+
+            //TODO: build list in a functon to add items
+            const SizedBox(height: elementPadding),
+
+            YoutubeEmbedded(url: widget.animeData?.trailerUrl ?? "")
           ],
         ));
   }

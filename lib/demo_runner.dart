@@ -19,6 +19,7 @@ class RunnerBody extends StatelessWidget {
       year: 2050,
       format: "Piscina",
       description: "Racoonz are nasty creatures. They eat your trash, they take over you house. You should be scared!",
+      trailerUrl: "https://www.youtube.com/watch?v=VDgsP-6TPFw"
   );
 
   RunnerBody({Key? key}) : super(key: key);
