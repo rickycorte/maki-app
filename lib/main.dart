@@ -3,12 +3,12 @@ import 'package:maki/anime_list_tab/anime_list_tab.dart';
 import 'package:maki/options_tab/options_tab.dart';
 import 'package:maki/models/anime.dart';
 import 'package:maki/common/anime_cover_grid.dart';
-
+import 'package:maki/demo_runner.dart';
 import 'common/custom_appbar.dart';
 import 'common/custom_bottombar.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -43,33 +43,31 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-
   int _selectedPageIndex = 0;
   Widget? _cachedRecommendationWidget;
 
   Widget _futureRecommendationGrid(username) {
     _cachedRecommendationWidget ??= FutureBuilder<List<Anime>>(
-          future: fetchRecommendations("xDevily"),
-          builder: (context, snapshot) {
-            if (snapshot.hasError) {
-              return const Center(
-                child: Text('An error has occurred!'),
-              );
-            } else if (snapshot.hasData) {
-              return AnimeCoverGrid(displayData: snapshot.data ?? []);
-            } else {
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
-            }
+        future: fetchRecommendations("xDevily"),
+        builder: (context, snapshot) {
+          if (snapshot.hasError) {
+            return const Center(
+              child: Text('An error has occurred!'),
+            );
+          } else if (snapshot.hasData) {
+            return AnimeCoverGrid(displayData: snapshot.data ?? []);
+          } else {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
           }
-      );
+        });
 
     return _cachedRecommendationWidget as Widget;
   }
 
   Widget _getSelectedTab() {
-    switch(_selectedPageIndex) {
+    switch (_selectedPageIndex) {
       case 1:
         return Text("My list page");
       case 2:
@@ -80,23 +78,21 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   void _onNavigationTabChange(int index) {
-    setState(() {_selectedPageIndex = index;});
+    setState(() {
+      _selectedPageIndex = index;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       appBar: const CustomAppBar(),
       body: _getSelectedTab(),
       bottomNavigationBar: BottomNavigationBar(
         items: const [
-          BottomNavigationBarItem(
-              icon: Icon(Icons.star), label: "For You"),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.list), label: "My List"),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.settings), label: "Options"),
+          BottomNavigationBarItem(icon: Icon(Icons.star), label: "For You"),
+          BottomNavigationBarItem(icon: Icon(Icons.list), label: "My List"),
+          BottomNavigationBarItem(icon: Icon(Icons.settings), label: "Options"),
         ],
         onTap: _onNavigationTabChange,
         currentIndex: _selectedPageIndex,
