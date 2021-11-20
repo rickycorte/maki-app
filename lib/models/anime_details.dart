@@ -1,7 +1,9 @@
 import 'dart:convert';
+import 'dart:ffi';
 
-import 'package:maki/models/anime.dart';
+import 'package:http/http.dart' as http;
 
+import 'anime.dart';
 import 'anime_character.dart';
 import 'anime_relation.dart';
 
@@ -21,8 +23,6 @@ class AnimeDetails extends Anime {
   final int? episodeMinutes;
 
   final String studio;
-
-  final String rating;
 
   final String? airStartDate;
   final String? airFinalDate;
@@ -52,7 +52,6 @@ class AnimeDetails extends Anime {
         this.episodeCount,
         this.episodeMinutes,
         this.studio = "Unknown",
-        this.rating = "Unknown",
         this.airStartDate,
         this.airFinalDate,
         this.relations,
@@ -68,5 +67,150 @@ class AnimeDetails extends Anime {
         score: score,
       );
 
-  //TODO: json constructor
+
+    factory AnimeDetails.fromAnilistJson(Map<String, dynamic> json) {
+      return AnimeDetails(
+          anilistID: json["id"],
+          title: json["title"]["english"],
+          coverUrl: json["coverImage"]["extraLarge"],
+          score: json["meanScore"],
+          year: json["seasonYear"],
+          format: json["format"],
+          genres: json["genres"],
+          altTitle: json["title"]["romaji"],
+          season: json["season"],
+          airStatus: json["status"],
+          description: json["description"],
+          episodeCount: json["episodes"],
+          episodeMinutes: json["duration"],
+          trailerUrl: json["trailer"]["site"] ? json["trailer"]["id"] : null,
+
+          // TODO: parse the main one only (the 0 one should be the main but i'm not sure)
+          studio: json["studios"]["edges"][0]["name"],
+
+          //TODO: fix null cases
+          airStartDate: "${json["startDate"]["day"]}/${json["startDate"]["month"]}/${json["startDate"]["year"]}",
+          airFinalDate: "${json["endDate"]["day"]}/${json["endDate"]["month"]}/${json["endDate"]["year"]}",
+
+          //TODO: parse them in their own classes
+          relations: null,
+          characters: null,
+
+      );
+    }
+}
+
+
+const _anilist_fetch_query = """
+query media(\$id: Int, \$type: MediaType, \$isAdult: Boolean) {
+  Media(id: \$id, type: \$type, isAdult: \$isAdult) {
+    id
+    title {
+      english
+      romaji
+    }
+    coverImage {
+      extraLarge
+    }
+    startDate {
+      year
+      month
+      day
+    }
+    endDate {
+      year
+      month
+      day
+    }
+    description
+    season
+    seasonYear
+    type
+    format
+    status(version: 2)
+    episodes
+    duration
+    genres
+    meanScore
+    popularity
+    relations {
+      edges {
+        id
+        relationType(version: 2)
+        node {
+          id
+          title {
+            english
+          }
+          format
+          type
+          coverImage {
+            large
+          }
+        }
+      }
+    }
+    characterPreview: characters(perPage: 6, sort: [ROLE, RELEVANCE, ID]) {
+      edges {
+        id
+        role
+        node {
+          id
+          name {
+            userPreferred
+          }
+          image {
+            large
+          }
+        }
+      }
+    }
+    studios {
+      edges {
+        isMain
+        node {
+          id
+          name
+        }
+      }
+    }
+
+    trailer {
+      id
+      site
+    }
+    mediaListEntry {
+      id
+      status
+      score
+    }
+  }
+}
+""";
+
+Future<AnimeDetails> fetchAnimeDetails(int animeID) async {
+  final response = await http.post(
+    Uri.parse('https://anilist.co/graphql'),
+    headers: <String, String>{
+      'Content-Type': 'application/json; charset=UTF-8',
+    },
+    body:  jsonEncode({
+      "query": _anilist_fetch_query,
+      "variables": { "id": animeID }
+    })
+  );
+
+  if (response.statusCode == 200) {
+    // If the server did return a 200 OK response,
+    // then parse the JSON.
+    var jsonData = jsonDecode(response.body)["data"]["Media"];
+
+    return AnimeDetails.fromAnilistJson(jsonData);
+
+  } else {
+    // If the server did not return a 200 OK response,
+    // then throw an exception.
+    //TODO: creare una classe apposta per l'eccezione; servono classi per gli errori proprio di connettivita e classi per quando ci sono errori nella richiesta
+    throw Exception('Failed to load the file');
+  }
 }

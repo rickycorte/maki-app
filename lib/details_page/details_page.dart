@@ -9,12 +9,11 @@ import 'cover_info.dart';
 class AnimeDetailsPage extends StatefulWidget {
   AnimeDetails? animeData;
 
-  AnimeDetailsPage(Key? key, int anilistID) : super(key: key) {
-    print("We should call Anilist api with: " + anilistID.toString());
-  }
+  int? anilistID;
 
-  AnimeDetailsPage.fromPrefetchedAnime({Key? key, required this.animeData})
-      : super(key: key);
+  AnimeDetailsPage({Key? key, required this.anilistID}) : super(key: key);
+
+  AnimeDetailsPage.fromPrefetchedAnime({Key? key, required this.animeData}) : super(key: key);
   
   @override
   State<AnimeDetailsPage> createState() => _AnimeDetailsPageState();

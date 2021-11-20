@@ -1,8 +1,5 @@
 import 'dart:convert';
 
-import 'anime_character.dart';
-import 'anime_relation.dart';
-
 import 'package:http/http.dart' as http;
 
 //Link the app to Maki APi
