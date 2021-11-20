@@ -14,16 +14,21 @@ class AnimeDetailsPage extends StatefulWidget {
   AnimeDetailsPage({Key? key, required this.anilistID}) : super(key: key);
 
   AnimeDetailsPage.fromPrefetchedAnime({Key? key, required this.animeData}) : super(key: key);
-  
+
+
+  _onDetailsFetched(AnimeDetails anime) {
+    animeData = anime;
+  }
+
   @override
   State<AnimeDetailsPage> createState() => _AnimeDetailsPageState();
 }
 
+
 // state item
 class _AnimeDetailsPageState extends State<AnimeDetailsPage> {
 
-  @override
-  Widget build(BuildContext context) {
+  Widget _loadedPageLayout() {
     const elementPadding = 20.0;
 
     List<Widget> pageElements = [CoverInfo(anime: widget.animeData as AnimeDetails)]; // top info are guaranteed to be present
@@ -33,13 +38,40 @@ class _AnimeDetailsPageState extends State<AnimeDetailsPage> {
       pageElements.add(YoutubeEmbedded(url: widget.animeData?.trailerUrl ?? ""));
     }
 
+    return ListView(
+      padding: const EdgeInsets.all(10.0),
+      children: pageElements,
+    );
+  }
+
+  Widget _loadFromRemoteLayout() {
+    return FutureBuilder<AnimeDetails>(
+        future: fetchAnimeDetails(widget.anilistID as int),
+        builder: (context, snapshot) {
+          if (snapshot.hasError) {
+            return const Center(
+              child: Text('An error has occurred!'),
+            );
+          } else if (snapshot.hasData) {
+            widget._onDetailsFetched(snapshot.data as AnimeDetails);
+            return _loadedPageLayout();
+
+          } else {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+        });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+
       return Scaffold(
           appBar: const CustomAppBar(
             showBackButton: true,
           ),
-          body: ListView(
-            padding: const EdgeInsets.all(10.0),
-            children: pageElements,
-          ));
+          body: widget.animeData != null ? _loadedPageLayout() : _loadFromRemoteLayout(),
+      );
   }
 }

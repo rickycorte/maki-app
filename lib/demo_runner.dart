@@ -38,6 +38,16 @@ class RunnerBody extends StatelessWidget {
                     builder: (context) => AnimeDetailsPage.fromPrefetchedAnime(
                         animeData: sampleAnime)))
           },
+        ),
+        ElevatedButton(
+          child: const Text("Open fetched details!"),
+          onPressed: () => {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => AnimeDetailsPage(anilistID: 132456,))
+            )
+          },
         )
       ],
     ));

@@ -76,17 +76,17 @@ class AnimeDetails extends Anime {
           score: json["meanScore"],
           year: json["seasonYear"],
           format: json["format"],
-          genres: json["genres"],
+          genres: json["genres"].cast<String>(),
           altTitle: json["title"]["romaji"],
           season: json["season"],
           airStatus: json["status"],
           description: json["description"],
           episodeCount: json["episodes"],
           episodeMinutes: json["duration"],
-          trailerUrl: json["trailer"]["site"] ? json["trailer"]["id"] : null,
+          trailerUrl: json["trailer"]["site"] == "youtube" ? json["trailer"]["id"] : null,
 
           // TODO: parse the main one only (the 0 one should be the main but i'm not sure)
-          studio: json["studios"]["edges"][0]["name"],
+          studio: json["studios"]["edges"][0]["name"] ?? "Unkonown",
 
           //TODO: fix null cases
           airStartDate: "${json["startDate"]["day"]}/${json["startDate"]["month"]}/${json["startDate"]["year"]}",
@@ -190,7 +190,7 @@ query media(\$id: Int, \$type: MediaType, \$isAdult: Boolean) {
 
 Future<AnimeDetails> fetchAnimeDetails(int animeID) async {
   final response = await http.post(
-    Uri.parse('https://anilist.co/graphql'),
+    Uri.parse('https://graphql.anilist.co/'),
     headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
     },
