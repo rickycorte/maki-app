@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:maki/details_page/details_page.dart';
 import 'package:maki/models/anime.dart';
+import 'package:maki/common/rounded_cover.dart';
 
 class AnimeCoverGrid extends StatefulWidget implements PreferredSizeWidget {
   List<Anime> displayData = [];
@@ -18,13 +19,12 @@ class AnimeCoverGrid extends StatefulWidget implements PreferredSizeWidget {
 // CREARE WIDGET CHE MI RESTITUISCE LA DETAILS PAGE DELL'ANIME CORRISPONDENTE
 
 class _AnimeCoverGridState extends State<AnimeCoverGrid> {
-  //TODO:
-  // fare le card con la cover stondata come nella pagina dei details
-  // in basso mettiamo poi il titolo
   // e tappando sulla card poi viene aperta la pagina dei details
   Widget _makeAnimeCard(Anime anime) {
     return GestureDetector(
-      onTap: () {},
+      onTap: () {
+        print("HO PREMUTO SU UNA CASELLA");
+      },
       /*  {
         Navigator.push(
             context,
@@ -38,12 +38,7 @@ class _AnimeCoverGridState extends State<AnimeCoverGrid> {
                     AnimeDetailsPage.fromPrefetchedAnime(animeData: anime)))
       },
       */
-      child: Card(
-        elevation: 10,
-        child: new Container(
-          child: Image.network(anime.coverUrl),
-        ),
-      ),
+      child: RoundedCover(url: anime.coverUrl),
     );
   }
 
