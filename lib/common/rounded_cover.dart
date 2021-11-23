@@ -35,9 +35,9 @@ class _CustomRoundedCoverState extends State<RoundedCover> {
           const Text(
             'TopBar',
             style: TextStyle(
-              fontWeight: FontWeight.bold,
-              color: Colors.white,
-              fontSize: 24,
+              fontWeight: FontWeight.w900,
+              color: Colors.blueGrey,
+              fontSize: 25,
             ),
           ),
           Column(
@@ -48,9 +48,9 @@ class _CustomRoundedCoverState extends State<RoundedCover> {
               const Text(
                 'BottomBar',
                 style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
-                  fontSize: 24,
+                  fontWeight: FontWeight.w900,
+                  color: Colors.blueGrey,
+                  fontSize: 25,
                 ),
               ),
             ],

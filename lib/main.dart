@@ -35,6 +35,17 @@ class MyApp extends StatelessWidget {
   }
 }
 
+//Classe per aggiornare la gridbar
+AnimeCoverGrid getCover(oldCoverGrid) {
+  AnimeCoverGrid newCover = oldCoverGrid;
+  return newCover;
+}
+
+//Classe per svolgere l'azione dopo il refresh indicator
+Future<Null> refreshGridBar() async {
+  await Future.delayed(Duration(seconds: 2));
+}
+
 class MyHomePage extends StatefulWidget {
   const MyHomePage({Key? key}) : super(key: key);
 
@@ -50,12 +61,19 @@ class _MyHomePageState extends State<MyHomePage> {
     _cachedRecommendationWidget ??= FutureBuilder<List<Anime>>(
         future: fetchRecommendations("xDevily"),
         builder: (context, snapshot) {
+          //La chiamo firstCoverGrid perchè è la prima che carico quando apro l'app
+          AnimeCoverGrid firstCoverGrid =
+              getCover(AnimeCoverGrid(displayData: snapshot.data ?? []));
           if (snapshot.hasError) {
             return const Center(
               child: Text('An error has occurred!'),
             );
           } else if (snapshot.hasData) {
-            return AnimeCoverGrid(displayData: snapshot.data ?? []);
+            return RefreshIndicator(
+              triggerMode: RefreshIndicatorTriggerMode.onEdge,
+              onRefresh: refreshGridBar,
+              child: AnimeCoverGrid(displayData: snapshot.data ?? []),
+            );
           } else {
             return const Center(
               child: CircularProgressIndicator(),
