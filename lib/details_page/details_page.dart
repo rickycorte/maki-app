@@ -29,6 +29,13 @@ class AnimeDetailsPage extends StatefulWidget {
 // state item
 class _AnimeDetailsPageState extends State<AnimeDetailsPage> {
 
+  void _onRelatedAnimePressed(dynamic anime) {
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => AnimeDetailsPage(anilistID: (anime as AnimeRelation).anilistID,))
+    );
+  }
 
   Widget _loadedPageLayout() {
     const elementPadding = 20.0;
@@ -44,7 +51,7 @@ class _AnimeDetailsPageState extends State<AnimeDetailsPage> {
       var relations = widget.animeData?.relations as List<AnimeRelation>;
 
       pageElements.add(const SizedBox(height: elementPadding));
-      pageElements.add(Shelf(items: relations, title: "Relations",));
+      pageElements.add(Shelf(items: relations, title: "Relations", onItemPressed: _onRelatedAnimePressed));
     }
 
     return ListView(

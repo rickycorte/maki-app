@@ -18,6 +18,8 @@ class Shelf extends StatelessWidget {
   List<IShelfItem> items;
   int itemsPerRow;
 
+  Function(dynamic)? onItemPressed;
+
   Widget _renderItem(IShelfItem item)  {
     return Column(
         children: [
@@ -35,7 +37,7 @@ class Shelf extends StatelessWidget {
                       filter: ImageFilter.blur(sigmaX: 3.0, sigmaY: 3.0),
                       child: Container(
                         alignment: Alignment.bottomCenter,
-                        decoration: BoxDecoration(color: Colors.grey.shade200.withOpacity(0.7)),
+                        decoration: BoxDecoration(color: Colors.red.shade300.withOpacity(0.7)),
                         height: 20,
                         child: Text(item.topText().replaceAll("_", " "),  style: const TextStyle(color: Colors.black)),
                       )
@@ -50,10 +52,12 @@ class Shelf extends StatelessWidget {
 
   }
 
-  Shelf({Key? key, this.title = "", required this.items, this.itemsPerRow = 3}) : super(key: key);
+
+  Shelf({Key? key, this.title = "", required this.items, this.itemsPerRow = 3, this.onItemPressed = null}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+
     return Column (
       children: [
         if(title != "") Text(title, style: Theme.of(context).textTheme.headline6,),
@@ -64,7 +68,7 @@ class Shelf extends StatelessWidget {
           crossAxisCount: itemsPerRow,
           childAspectRatio: 1/1.3,
           physics: const NeverScrollableScrollPhysics(),
-          children: items.map((e) => _renderItem(e)).toList(),
+          children: items.map((e) => (onItemPressed == null ? _renderItem(e) : GestureDetector( onTap: () { onItemPressed!(e); }, child: _renderItem(e)))).toList(),
         )
 
       ],

@@ -93,7 +93,7 @@ class AnimeDetails extends Anime {
           airFinalDate: "${json["endDate"]["day"]}/${json["endDate"]["month"]}/${json["endDate"]["year"]}",
 
           //TODO: parse them in their own classes
-          relations: AnimeRelation.fromJsonArray(json["relations"]["edges"], keepOnlyAnime: false),
+          relations: AnimeRelation.fromJsonArray(json["relations"]["edges"]),
           characters: null,
 
       );

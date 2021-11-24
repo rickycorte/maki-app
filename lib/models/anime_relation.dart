@@ -30,7 +30,7 @@ class AnimeRelation implements IShelfItem {
     List<AnimeRelation> result = [];
     for(var item in jsonArray) {
 
-      if(keepOnlyAnime && item["type"] != "ANIME") {
+      if(keepOnlyAnime && item["node"]["type"] != "ANIME") {
         continue;
       }
 
