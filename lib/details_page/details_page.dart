@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:maki/common/custom_appbar.dart';
+import 'package:maki/details_page/shelf.dart';
 import 'package:maki/details_page/youtube_embedded.dart';
 import 'package:maki/models/anime_details.dart';
+import 'package:maki/models/anime_relation.dart';
 
 import 'cover_info.dart';
 
@@ -24,9 +26,9 @@ class AnimeDetailsPage extends StatefulWidget {
   State<AnimeDetailsPage> createState() => _AnimeDetailsPageState();
 }
 
-
 // state item
 class _AnimeDetailsPageState extends State<AnimeDetailsPage> {
+
 
   Widget _loadedPageLayout() {
     const elementPadding = 20.0;
@@ -36,6 +38,13 @@ class _AnimeDetailsPageState extends State<AnimeDetailsPage> {
     if(widget.animeData?.trailerUrl != null) {
       pageElements.add(const SizedBox(height: elementPadding));
       pageElements.add(YoutubeEmbedded(url: widget.animeData?.trailerUrl ?? ""));
+    }
+
+    if(widget.animeData?.relations != null && (widget.animeData?.relations as List<AnimeRelation>).isNotEmpty) {
+      var relations = widget.animeData?.relations as List<AnimeRelation>;
+
+      pageElements.add(const SizedBox(height: elementPadding));
+      pageElements.add(Shelf(items: relations, title: "Relations",));
     }
 
     return ListView(

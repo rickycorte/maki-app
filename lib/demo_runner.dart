@@ -45,7 +45,7 @@ class RunnerBody extends StatelessWidget {
             Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => AnimeDetailsPage(anilistID: 132456,))
+                    builder: (context) => AnimeDetailsPage(anilistID: 131586,))
             )
           },
         )

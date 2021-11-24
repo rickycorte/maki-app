@@ -93,7 +93,7 @@ class AnimeDetails extends Anime {
           airFinalDate: "${json["endDate"]["day"]}/${json["endDate"]["month"]}/${json["endDate"]["year"]}",
 
           //TODO: parse them in their own classes
-          relations: null,
+          relations: AnimeRelation.fromJsonArray(json["relations"]["edges"], keepOnlyAnime: false),
           characters: null,
 
       );
@@ -140,7 +140,7 @@ query media(\$id: Int, \$type: MediaType, \$isAdult: Boolean) {
         node {
           id
           title {
-            english
+            userPreferred
           }
           format
           type
