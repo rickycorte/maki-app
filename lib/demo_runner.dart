@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:maki/details_page/details_page.dart';
 import 'package:maki/models/anime.dart';
+import 'main.dart';
 import 'models/anime_details.dart';
 
 void main() async {
@@ -46,6 +47,17 @@ class RunnerBody extends StatelessWidget {
                 context,
                 MaterialPageRoute(
                     builder: (context) => AnimeDetailsPage(anilistID: 21202,))
+            )
+          },
+        ),
+
+        ElevatedButton(
+          child: const Text("Open home"),
+          onPressed: () => {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => const MyApp())
             )
           },
         )
