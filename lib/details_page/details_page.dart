@@ -37,7 +37,7 @@ class _AnimeDetailsPageState extends State<AnimeDetailsPage> {
 
     if(widget.animeData?.trailerUrl != null) {
       pageElements.add(const SizedBox(height: elementPadding));
-      pageElements.add(YoutubeEmbedded(url: widget.animeData?.trailerUrl ?? ""));
+      pageElements.add(ClipRRect(borderRadius: BorderRadius.circular(10.0), child: YoutubeEmbedded(url: widget.animeData?.trailerUrl ?? "")));
     }
 
     if(widget.animeData?.relations != null && (widget.animeData?.relations as List<AnimeRelation>).isNotEmpty) {
