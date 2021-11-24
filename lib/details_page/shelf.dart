@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 
 // interfaces used to get properties to draw the shelf items
@@ -17,13 +19,34 @@ class Shelf extends StatelessWidget {
   int itemsPerRow;
 
   Widget _renderItem(IShelfItem item)  {
-    return  ConstrainedBox(
-      constraints: const BoxConstraints(maxHeight: 800, maxWidth: 400),
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(10.0),
-        child: Image.network(item.imageUrl(), fit: BoxFit.cover),
-      ),
-    );
+    return Column(
+        children: [
+          AspectRatio(
+              aspectRatio: 1,
+              child: Stack(
+                children: [
+                  Positioned.fill(child: ClipRRect(
+                      borderRadius: BorderRadius.circular(10.0),
+                      child: Image.network(item.imageUrl(), fit: BoxFit.cover),
+                  )),
+                  ClipRRect(
+                    borderRadius: const BorderRadius.only(topLeft: Radius.circular(10), topRight:Radius.circular(10.0)),
+                    child: BackdropFilter(
+                      filter: ImageFilter.blur(sigmaX: 3.0, sigmaY: 3.0),
+                      child: Container(
+                        alignment: Alignment.bottomCenter,
+                        decoration: BoxDecoration(color: Colors.grey.shade200.withOpacity(0.7)),
+                        height: 20,
+                        child: Text(item.topText().replaceAll("_", " "),  style: const TextStyle(color: Colors.black)),
+                      )
+                    ),
+                  ),
+                ],
+              )
+          ),
+          if(item.bottomText() != "") Text(item.bottomText(), overflow: TextOverflow.ellipsis, maxLines: 2,),
+        ]
+      );
 
   }
 
@@ -39,6 +62,7 @@ class Shelf extends StatelessWidget {
           mainAxisSpacing: 10,
           crossAxisSpacing: 10,
           crossAxisCount: itemsPerRow,
+          childAspectRatio: 1/1.3,
           physics: const NeverScrollableScrollPhysics(),
           children: items.map((e) => _renderItem(e)).toList(),
         )
