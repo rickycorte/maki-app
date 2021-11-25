@@ -8,8 +8,9 @@ class RoundedCover extends StatefulWidget {
   //cioè quella che viene estesa
 
   final String url;
+  final String title;
 
-  const RoundedCover({Key? key, required this.url}) : super(key: key);
+  const RoundedCover({Key? key, required this.url, required this.title}) : super(key: key);
 
   @override
   _CustomRoundedCoverState createState() => _CustomRoundedCoverState();
@@ -34,6 +35,30 @@ class _CustomRoundedCoverState extends State<RoundedCover> {
             ),
             fit: BoxFit.cover,
           ),
+          Positioned(
+              bottom: 0,
+              left:0,
+              right: 0,
+              child: Container(
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                        colors: [Colors.black.withOpacity(0.4), Colors.black.withOpacity(0)],
+                        begin: const Alignment(0,0),
+                        end: const Alignment(0,-1),
+                    )
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.only(top:15.0, bottom: 10.0),
+                  child: Text(
+                    widget.title,
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,),
+                ),
+            )
+          )
         ],
       ),
     );

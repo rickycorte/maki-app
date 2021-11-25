@@ -38,7 +38,7 @@ class _AnimeCoverGridState extends State<AnimeCoverGrid> {
                     AnimeDetailsPage.fromPrefetchedAnime(animeData: anime)))
       },
       */
-      child: RoundedCover(url: anime.coverUrl),
+      child: RoundedCover(url: anime.coverUrl, title: anime.title,),
     );
   }
 
@@ -46,6 +46,7 @@ class _AnimeCoverGridState extends State<AnimeCoverGrid> {
   Widget build(BuildContext context) {
     return GridView.count(
         crossAxisCount: 2,
+        childAspectRatio: 1/1.5,
         children: widget.displayData.map((e) => _makeAnimeCard(e)).toList());
   }
 }
