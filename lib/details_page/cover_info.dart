@@ -51,13 +51,13 @@ class CoverInfo extends StatelessWidget {
             ),
             const SizedBox(height: 10),
             Text(
-              formatText,
+              formatText.replaceAll("_", " "),
               textAlign: textAlignment,
               style: theme.textTheme.bodyText1,
             ),
             const SizedBox(height: 10),
             Text(
-              statusText,
+              statusText.replaceAll("_", " "),
               textAlign: textAlignment,
               style: theme.textTheme.bodyText1,
             ),
@@ -72,8 +72,7 @@ class CoverInfo extends StatelessWidget {
       formattedGenres += " - " + anime.genres[i];
     }
 
-    formattedGenres = formattedGenres
-        .substring(3); // remove the " - " characters added by the first element
+    formattedGenres = formattedGenres.isNotEmpty ? formattedGenres.substring(3) : formattedGenres; // remove the " - " characters added by the first element
 
     return Container(
         alignment: Alignment.center,
@@ -88,6 +87,7 @@ class CoverInfo extends StatelessWidget {
             Text(
               formattedGenres,
               textAlign: TextAlign.center,
+              style: TextStyle(color: Theme.of(context).primaryColor, fontWeight: FontWeight.bold),
             ),
         ]));
   }
@@ -112,7 +112,7 @@ class CoverInfo extends StatelessWidget {
 
       const SizedBox(height: elementPadding),
       Text(
-        anime.description,
+        anime.description.replaceAll("<br>", "\n").replaceAll(RegExp(r"<\/?b>|<\/?i>"), ""),
         textAlign: TextAlign.center,
       )
 

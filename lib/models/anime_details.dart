@@ -81,7 +81,7 @@ class AnimeDetails extends Anime {
     }
 
     static String _mainStudio(Map<String, dynamic> json) {
-      if(json == null || json["edges"] == null) {
+      if(json == null || json["edges"] == null || json["edges"].isNotEmpty) {
         return "Unknown Studio";
       }
 
@@ -99,8 +99,8 @@ class AnimeDetails extends Anime {
           genres: json["genres"].cast<String>(),
           altTitle: json["title"]["romaji"],
           season: json["season"] ?? "Unknown",
-          airStatus: json["status"],
-          description: json["description"],
+          airStatus: json["status"] ?? "Unknown",
+          description: json["description"] ?? "",
           episodeCount: json["episodes"],
           episodeMinutes: json["duration"],
           trailerUrl: _parseTrailer(json),
