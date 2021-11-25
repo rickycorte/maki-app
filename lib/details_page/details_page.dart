@@ -67,6 +67,7 @@ class _AnimeDetailsPageState extends State<AnimeDetailsPage> {
         future: fetchAnimeDetails(widget.anilistID as int),
         builder: (context, snapshot) {
           if (snapshot.hasError) {
+            debugPrint(snapshot.error.toString());
             return const Center(
               child: Text('An error has occurred!'),
             );

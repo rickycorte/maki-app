@@ -63,7 +63,7 @@ class _videoPlayerState extends State<YoutubeEmbedded> {
       onTap: () => { _launchVideo(context) },
       child: Stack(
         children: [
-          Image.network(thumbLink, ),
+          Image.network(thumbLink, ), // TODO: fallback img
           Positioned.fill(
             child: Container(
               decoration: BoxDecoration(color: Colors.grey.shade900.withOpacity(0.7)),

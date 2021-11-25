@@ -30,9 +30,6 @@ class _CustomRoundedCoverState extends State<RoundedCover> {
         children: [
           Ink.image(
             image: NetworkImage(widget.url),
-            child: InkWell(
-              onTap: () {},
-            ),
             fit: BoxFit.cover,
           ),
           Positioned(

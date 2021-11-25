@@ -60,37 +60,57 @@ class AnimeDetails extends Anime {
       }) : super(
         anilistID: anilistID,
         malID: malID,
-        title: title,
+        title: title ?? altTitle,
         coverUrl: coverUrl,
         year: year,
         format: format,
         score: score,
       );
 
+    static String? _parseTrailer(Map<String, dynamic> json){
+      return json["trailer"] != null && json["trailer"]["site"] == "youtube" ? json["trailer"]["id"] : null;
+    }
+
+    static String _fmtDate(Map<String, dynamic> json) {
+
+      if(json == null || json["day"] == null || json["month"] == null || json["year"] == null) {
+        return "Unknown";
+      }
+
+      return "${json["day"]}/${json["month"]}/${json["year"]}";
+    }
+
+    static String _mainStudio(Map<String, dynamic> json) {
+      if(json == null || json["edges"] == null) {
+        return "Unknown Studio";
+      }
+
+      return json["edges"][0]["node"]["name"]; //TODO: check for main
+    }
 
     factory AnimeDetails.fromAnilistJson(Map<String, dynamic> json) {
       return AnimeDetails(
           anilistID: json["id"],
           title: json["title"]["english"],
           coverUrl: json["coverImage"]["extraLarge"],
-          score: json["meanScore"],
+          score: json["meanScore"] ?? 0,
           year: json["seasonYear"],
           format: json["format"],
           genres: json["genres"].cast<String>(),
           altTitle: json["title"]["romaji"],
-          season: json["season"],
+          season: json["season"] ?? "Unknown",
           airStatus: json["status"],
           description: json["description"],
           episodeCount: json["episodes"],
           episodeMinutes: json["duration"],
-          trailerUrl: json["trailer"]["site"] == "youtube" ? json["trailer"]["id"] : null,
+          trailerUrl: _parseTrailer(json),
 
           // TODO: parse the main one only (the 0 one should be the main but i'm not sure)
-          studio: json["studios"]["edges"][0]["name"] ?? "Unkonown",
+          studio:  _mainStudio(json["studios"]),
 
           //TODO: fix null cases
-          airStartDate: "${json["startDate"]["day"]}/${json["startDate"]["month"]}/${json["startDate"]["year"]}",
-          airFinalDate: "${json["endDate"]["day"]}/${json["endDate"]["month"]}/${json["endDate"]["year"]}",
+          airStartDate: _fmtDate(json["startDate"]),
+          airFinalDate: _fmtDate(json["endDate"]),
 
           //TODO: parse them in their own classes
           relations: AnimeRelation.fromJsonArray(json["relations"]["edges"]),

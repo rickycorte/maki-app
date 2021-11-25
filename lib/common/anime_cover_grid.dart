@@ -23,21 +23,13 @@ class _AnimeCoverGridState extends State<AnimeCoverGrid> {
   Widget _makeAnimeCard(Anime anime) {
     return GestureDetector(
       onTap: () {
-        print("HO PREMUTO SU UNA CASELLA");
-      },
-      /*  {
         Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (context) =>
-                    //QUESTO VA BENE SOLO CHE SERVE LA CLASSE ANIME_DETAILS , POI MEDIANTE QUELLA SI POSSONO
-                    //RISALIRE A TUTTI I DETTAGLI MEDIANTE L'ANIME
-                    //
-                    //
-                    //CREARE FUNZIONE O METODO CHE RICAVA L'ANIME DETAILS DAL NOME ANIME
-                    AnimeDetailsPage.fromPrefetchedAnime(animeData: anime)))
+                builder: (context) => AnimeDetailsPage(anilistID: anime.anilistID,))
+        );
       },
-      */
+
       child: RoundedCover(url: anime.coverUrl, title: anime.title,),
     );
   }
