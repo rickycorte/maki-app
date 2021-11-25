@@ -66,9 +66,9 @@ class _videoPlayerState extends State<YoutubeEmbedded> {
           Image.network(thumbLink, ),
           Positioned.fill(
             child: Container(
-              decoration: BoxDecoration(color: Colors.grey.shade900.withOpacity(0.6)),
-              child: Center(
-                child: Icon(Icons.play_arrow, size:100, color: Colors.red.shade300.withOpacity(1),),
+              decoration: BoxDecoration(color: Colors.grey.shade900.withOpacity(0.7)),
+              child: const Center(
+                child: Icon(Icons.play_arrow, size:100, color: Colors.red,),
               ),
             ),
           ),

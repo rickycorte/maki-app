@@ -28,7 +28,8 @@ class MyApp extends StatelessWidget {
         // or simply save your changes to "hot reload" in a Flutter IDE).
         // Notice that the counter didn't reset back to zero; the application
         // is not restarted.
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.red,
+        primaryColor: Colors.red,
       ),
       home: const MyHomePage(),
     );
@@ -104,13 +105,9 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const CustomAppBar(),
+      //appBar: const CustomAppBar(),
       body: _getSelectedTab(),
-      bottomNavigationBar: CustomBottomBar(),
-
-      //Questa è la parte di codice che mostra la bottombar normale
-      /*
-      BottomNavigationBar(
+      bottomNavigationBar: BottomNavigationBar(
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.star), label: "For You"),
           BottomNavigationBarItem(icon: Icon(Icons.list), label: "My List"),
@@ -119,9 +116,6 @@ class _MyHomePageState extends State<MyHomePage> {
         onTap: _onNavigationTabChange,
         currentIndex: _selectedPageIndex,
       ),
-
-
-      */
     );
   }
 }

@@ -37,7 +37,7 @@ class Shelf extends StatelessWidget {
                       filter: ImageFilter.blur(sigmaX: 3.0, sigmaY: 3.0),
                       child: Container(
                         alignment: Alignment.bottomCenter,
-                        decoration: BoxDecoration(color: Colors.red.shade300.withOpacity(0.7)),
+                        decoration: BoxDecoration(color: Colors.red.shade500.withOpacity(0.7)),
                         height: 20,
                         child: Text(item.topText().replaceAll("_", " "),  style: const TextStyle(color: Colors.black)),
                       )
