@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:maki/common/custom_appbar.dart';
-import 'package:maki/common/custom_bottombar.dart';
+
 import 'package:maki/common/anime_cover_grid.dart';
 
 class list_tab extends StatelessWidget {
@@ -34,8 +34,9 @@ class listTabScreenState extends State<listTabScreen> {
       appBar: CustomAppBar(
         showBackButton: true,
       ),
-      body: AnimeCoverGrid(displayData: [],),
-      bottomNavigationBar: CustomBottomBar(),
+      body: AnimeCoverGrid(
+        displayData: [],
+      ),
     );
   }
 }

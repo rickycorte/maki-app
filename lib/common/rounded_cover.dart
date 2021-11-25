@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 
 class RoundedCover extends StatefulWidget {
@@ -32,29 +34,6 @@ class _CustomRoundedCoverState extends State<RoundedCover> {
             ),
             fit: BoxFit.cover,
           ),
-          const Text(
-            'TopBar',
-            style: TextStyle(
-              fontWeight: FontWeight.w900,
-              color: Colors.blueGrey,
-              fontSize: 25,
-            ),
-          ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.end,
-            // ignore: prefer_const_literals_to_create_immutables
-            children: [
-              const Text(
-                'BottomBar',
-                style: TextStyle(
-                  fontWeight: FontWeight.w900,
-                  color: Colors.blueGrey,
-                  fontSize: 25,
-                ),
-              ),
-            ],
-          )
         ],
       ),
     );

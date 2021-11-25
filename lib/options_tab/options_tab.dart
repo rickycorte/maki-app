@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:maki/common/custom_appbar.dart';
-import 'package:maki/common/custom_bottombar.dart';
 
 class opt_tab extends StatelessWidget {
   const opt_tab({Key? key}) : super(key: key);
@@ -107,7 +106,6 @@ class userNameScreenState extends State<userNameScreen> {
           ),
         ]),
       ),
-      bottomNavigationBar: CustomBottomBar(),
     );
   }
 }

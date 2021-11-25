@@ -5,7 +5,7 @@ import 'package:maki/models/anime.dart';
 import 'package:maki/common/anime_cover_grid.dart';
 import 'package:maki/demo_runner.dart';
 import 'common/custom_appbar.dart';
-import 'common/custom_bottombar.dart';
+import 'common/custom_bottom_bar.dart';
 
 void main() {
   runApp(MyApp());
@@ -106,7 +106,11 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       appBar: const CustomAppBar(),
       body: _getSelectedTab(),
-      bottomNavigationBar: BottomNavigationBar(
+      bottomNavigationBar: CustomBottomBar(),
+
+      //Questa è la parte di codice che mostra la bottombar normale
+      /*
+      BottomNavigationBar(
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.star), label: "For You"),
           BottomNavigationBarItem(icon: Icon(Icons.list), label: "My List"),
@@ -115,6 +119,9 @@ class _MyHomePageState extends State<MyHomePage> {
         onTap: _onNavigationTabChange,
         currentIndex: _selectedPageIndex,
       ),
+
+
+      */
     );
   }
 }
