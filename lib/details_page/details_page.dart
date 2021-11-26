@@ -111,7 +111,7 @@ class _AnimeDetailsPageState extends State<AnimeDetailsPage> {
 
       return WillPopScope(
         onWillPop: () async {
-          return Navigator.canPop(context);
+          return Future.value(true);
         },
         child: Scaffold(
             appBar: const CustomAppBar(

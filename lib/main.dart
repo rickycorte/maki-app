@@ -36,17 +36,6 @@ class MyApp extends StatelessWidget {
   }
 }
 
-//Classe per aggiornare la gridbar
-AnimeCoverGrid getCover(oldCoverGrid) {
-  AnimeCoverGrid newCover = oldCoverGrid;
-  return newCover;
-}
-
-//Classe per svolgere l'azione dopo il refresh indicator
-Future<Null> refreshGridBar() async {
-  await Future.delayed(Duration(seconds: 2));
-}
-
 class MyHomePage extends StatefulWidget {
   const MyHomePage({Key? key}) : super(key: key);
 
@@ -58,13 +47,18 @@ class _MyHomePageState extends State<MyHomePage> {
   int _selectedPageIndex = 0;
   Widget? _cachedRecommendationWidget;
 
+  //Classe per svolgere l'azione dopo il refresh indicator
+  Future<bool> refreshGridBar() async {
+    _cachedRecommendationWidget = null;
+    setState(() {});
+
+    return await Future.value(true);
+  }
+
   Widget _futureRecommendationGrid(username) {
     _cachedRecommendationWidget ??= FutureBuilder<List<Anime>>(
-        future: fetchRecommendations("xDevily"),
+        future: fetchRecommendations(username),
         builder: (context, snapshot) {
-          //La chiamo firstCoverGrid perchè è la prima che carico quando apro l'app
-          AnimeCoverGrid firstCoverGrid =
-              getCover(AnimeCoverGrid(displayData: snapshot.data ?? []));
           if (snapshot.hasError) {
             return const Center(
               child: Text('An error has occurred!'),
@@ -85,10 +79,39 @@ class _MyHomePageState extends State<MyHomePage> {
     return _cachedRecommendationWidget as Widget;
   }
 
+  Widget _userList() {
+    return DefaultTabController(
+      length: 3,
+      child: Scaffold(
+        appBar: PreferredSize(
+          preferredSize: Size.fromHeight(kToolbarHeight),
+          child: Container(
+            color: Colors.red,
+            child: TabBar(
+              indicatorColor: Colors.white,
+                tabs: [
+                  Tab(icon: Icon(Icons.directions_car)),
+                  Tab(icon: Icon(Icons.directions_transit)),
+                  Tab(icon: Icon(Icons.directions_bike)),
+                ],
+              ),
+          ),
+        ),
+        body: const TabBarView(
+          children: [
+            Icon(Icons.directions_car),
+            Icon(Icons.directions_transit),
+            Icon(Icons.directions_bike),
+          ],
+        ),
+      ),
+    );
+  }
+
   Widget _getSelectedTab() {
     switch (_selectedPageIndex) {
       case 1:
-        return Text("My list page");
+        return _userList();
       case 2:
         return Text("Options page");
       default:
@@ -115,7 +138,8 @@ class _MyHomePageState extends State<MyHomePage> {
           items: const [
             BottomNavigationBarItem(icon: Icon(Icons.star), label: "For You"),
             BottomNavigationBarItem(icon: Icon(Icons.list), label: "My List"),
-            BottomNavigationBarItem(icon: Icon(Icons.settings), label: "Options"),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.settings), label: "Options"),
           ],
           onTap: _onNavigationTabChange,
           currentIndex: _selectedPageIndex,
