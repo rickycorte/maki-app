@@ -104,17 +104,22 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      //appBar: const CustomAppBar(),
-      body: _getSelectedTab(),
-      bottomNavigationBar: BottomNavigationBar(
-        items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.star), label: "For You"),
-          BottomNavigationBarItem(icon: Icon(Icons.list), label: "My List"),
-          BottomNavigationBarItem(icon: Icon(Icons.settings), label: "Options"),
-        ],
-        onTap: _onNavigationTabChange,
-        currentIndex: _selectedPageIndex,
+    return WillPopScope(
+      onWillPop: () async {
+        return Navigator.canPop(context);
+      },
+      child: Scaffold(
+        //appBar: const CustomAppBar(),
+        body: _getSelectedTab(),
+        bottomNavigationBar: BottomNavigationBar(
+          items: const [
+            BottomNavigationBarItem(icon: Icon(Icons.star), label: "For You"),
+            BottomNavigationBarItem(icon: Icon(Icons.list), label: "My List"),
+            BottomNavigationBarItem(icon: Icon(Icons.settings), label: "Options"),
+          ],
+          onTap: _onNavigationTabChange,
+          currentIndex: _selectedPageIndex,
+        ),
       ),
     );
   }

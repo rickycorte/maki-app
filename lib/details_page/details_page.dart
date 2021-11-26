@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:maki/common/custom_appbar.dart';
 import 'package:maki/details_page/shelf.dart';
 import 'package:maki/details_page/youtube_embedded.dart';
+import 'package:maki/models/anime_character.dart';
 import 'package:maki/models/anime_details.dart';
 import 'package:maki/models/anime_relation.dart';
 
@@ -56,6 +57,28 @@ class _AnimeDetailsPageState extends State<AnimeDetailsPage> {
       pageElements.add(Shelf(items: relations, title: "Relations", onItemPressed: _onRelatedAnimePressed));
     }
 
+    if(widget.animeData?.characters != null && (widget.animeData?.characters as List<AnimeCharacter>).isNotEmpty) {
+      var characters = widget.animeData?.characters as List<AnimeCharacter>;
+
+      pageElements.add(const SizedBox(height: elementPadding));
+      pageElements.add(Shelf(items: characters, title: "Characters"));
+    }
+
+    if(widget.animeData?.altTitle != null) {
+      pageElements.add(const SizedBox(height: elementPadding));
+      pageElements.add(Text("Alternative Title\n${widget.animeData?.altTitle}"));
+    }
+
+    if(widget.animeData?.studio != null && widget.animeData?.studio != "Unknown Studio") {
+      pageElements.add(const SizedBox(height: elementPadding));
+      pageElements.add(Text("Studio\n${widget.animeData?.studio}"));
+    }
+
+    if(widget.animeData?.airStartDate != null && widget.animeData?.airFinalDate != null) {
+      pageElements.add(const SizedBox(height: elementPadding));
+      pageElements.add(Text("Air Period\nFrom ${widget.animeData?.airStartDate} to ${widget.animeData?.airFinalDate}"));
+    }
+
     return ListView(
       padding: const EdgeInsets.all(10.0),
       children: pageElements,
@@ -86,11 +109,16 @@ class _AnimeDetailsPageState extends State<AnimeDetailsPage> {
   @override
   Widget build(BuildContext context) {
 
-      return Scaffold(
-          appBar: const CustomAppBar(
-            showBackButton: true,
-          ),
-          body: widget.animeData != null ? _loadedPageLayout() : _loadFromRemoteLayout(),
+      return WillPopScope(
+        onWillPop: () async {
+          return Navigator.canPop(context);
+        },
+        child: Scaffold(
+            appBar: const CustomAppBar(
+              showBackButton: true,
+            ),
+            body: widget.animeData != null ? _loadedPageLayout() : _loadFromRemoteLayout(),
+        ),
       );
   }
 }

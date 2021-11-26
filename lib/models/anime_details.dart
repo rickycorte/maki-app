@@ -81,7 +81,7 @@ class AnimeDetails extends Anime {
     }
 
     static String _mainStudio(Map<String, dynamic> json) {
-      if(json == null || json["edges"] == null || json["edges"].isNotEmpty) {
+      if(json == null || json["edges"] == null || !json["edges"].isNotEmpty) {
         return "Unknown Studio";
       }
 
@@ -113,8 +113,8 @@ class AnimeDetails extends Anime {
           airFinalDate: _fmtDate(json["endDate"]),
 
           //TODO: parse them in their own classes
-          relations: AnimeRelation.fromJsonArray(json["relations"]["edges"]),
-          characters: null,
+          relations: json["relations"] != null ? AnimeRelation.fromJsonArray(json["relations"]["edges"]) : null,
+          characters: AnimeCharacter.fromJsonArray(json["characterPreview"]),
 
       );
     }
