@@ -26,7 +26,7 @@ class _videoPlayerState extends State<YoutubeEmbedded> {
     }
     var id = videoUrl.length == 11 ? videoUrl : uri.queryParameters['v'];
 
-    return 'https://img.youtube.com/vi/$id/hq720.jpg';
+    return 'https://img.youtube.com/vi/$id';
   }
 
   void _launchVideo(BuildContext context) async {
@@ -49,6 +49,7 @@ class _videoPlayerState extends State<YoutubeEmbedded> {
     }
   }
 
+
   @override
   Widget build(BuildContext context) {
 
@@ -56,14 +57,17 @@ class _videoPlayerState extends State<YoutubeEmbedded> {
 
     // skip widget
     if(thumbLink == null) {
-      return const Text("Something went wrong loading your video");
+      return const Text("No video available");
     }
     
     return GestureDetector(
       onTap: () => { _launchVideo(context) },
       child: Stack(
         children: [
-          Image.network(thumbLink, ), // TODO: fallback img
+         Image.network(
+            "$thumbLink/hqdefault.jpg",
+            fit: BoxFit.fitWidth,
+          ),
           Positioned.fill(
             child: Container(
               decoration: BoxDecoration(color: Colors.grey.shade900.withOpacity(0.7)),

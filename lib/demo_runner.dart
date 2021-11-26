@@ -50,6 +50,16 @@ class RunnerBody extends StatelessWidget {
             )
           },
         ),
+        ElevatedButton(
+          child: const Text("Details: video thumb crash"),
+          onPressed: () => {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => AnimeDetailsPage(anilistID:21324,))
+            )
+          },
+        ),
 
         ElevatedButton(
           child: const Text("Open home"),
