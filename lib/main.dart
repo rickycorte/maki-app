@@ -1,11 +1,13 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:flutter/material.dart';
 import 'package:maki/anime_list_tab/anime_list_tab.dart';
-import 'package:maki/options_tab/options_tab.dart';
 import 'package:maki/models/anime.dart';
 import 'package:maki/common/anime_cover_grid.dart';
 import 'package:maki/demo_runner.dart';
 import 'common/custom_appbar.dart';
 import 'common/custom_bottom_bar.dart';
+import 'profile_page/option_tab.dart';
 
 void main() {
   runApp(MyApp());
@@ -81,26 +83,63 @@ class _MyHomePageState extends State<MyHomePage> {
 
   Widget _userList() {
     return DefaultTabController(
-      length: 3,
+      length: 4,
       child: Scaffold(
+        backgroundColor: Colors.white,
         appBar: PreferredSize(
           preferredSize: Size.fromHeight(kToolbarHeight),
           child: Container(
             color: Colors.red,
+            // ignore: prefer_const_constructors
             child: TabBar(
-              indicatorColor: Colors.white,
-                tabs: [
-                  Tab(icon: Icon(Icons.directions_car)),
-                  Tab(icon: Icon(Icons.directions_transit)),
-                  Tab(icon: Icon(Icons.directions_bike)),
-                ],
+              unselectedLabelColor: Colors.white,
+              indicatorSize: TabBarIndicatorSize.label,
+              indicator: BoxDecoration(
+                borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(10),
+                    topRight: Radius.circular(10)),
+                color: Colors.white,
               ),
+              // ignore: prefer_const_literals_to_create_immutables
+              tabs: [
+                Tab(
+                  child: Align(
+                    child: Text("Watching",
+                        style:
+                            const TextStyle(color: Colors.black, fontSize: 13)),
+                  ),
+                ),
+                Tab(
+                  child: Align(
+                    child: Text("Completed",
+                        style:
+                            const TextStyle(color: Colors.black, fontSize: 13)),
+                  ),
+                ),
+                Tab(
+                  child: Align(
+                    child: Text("In Program",
+                        style:
+                            const TextStyle(color: Colors.black, fontSize: 13)),
+                  ),
+                ),
+                Tab(
+                  child: Align(
+                    alignment: Alignment.center,
+                    child: Text("L'altro",
+                        style:
+                            const TextStyle(color: Colors.black, fontSize: 13)),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
-        body: const TabBarView(
+        body: TabBarView(
           children: [
             Icon(Icons.directions_car),
             Icon(Icons.directions_transit),
+            Icon(Icons.directions_bike),
             Icon(Icons.directions_bike),
           ],
         ),
@@ -113,7 +152,7 @@ class _MyHomePageState extends State<MyHomePage> {
       case 1:
         return _userList();
       case 2:
-        return Text("Options page");
+        return OptionsTabPage(nome: 'xDevily');
       default:
         return _futureRecommendationGrid("xDevily");
     }
