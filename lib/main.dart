@@ -48,6 +48,7 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   int _selectedPageIndex = 0;
   Widget? _cachedRecommendationWidget;
+  late Color colorTextTabBar = Colors.white;
 
   //Classe per svolgere l'azione dopo il refresh indicator
   Future<bool> refreshGridBar() async {
@@ -94,8 +95,8 @@ class _MyHomePageState extends State<MyHomePage> {
             child: Padding(
               padding: EdgeInsets.only(top: 50),
               child: TabBar(
+                labelColor: Colors.black,
                 unselectedLabelColor: Colors.white,
-                indicatorSize: TabBarIndicatorSize.label,
                 indicator: BoxDecoration(
                   borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(10),
@@ -107,30 +108,26 @@ class _MyHomePageState extends State<MyHomePage> {
                   Tab(
                     child: Align(
                       child: Text("Watching",
-                          style: const TextStyle(
-                              color: Colors.black, fontSize: 13)),
+                          style: const TextStyle(fontSize: 13)),
                     ),
                   ),
                   Tab(
                     child: Align(
                       child: Text("Completed",
-                          style: const TextStyle(
-                              color: Colors.black, fontSize: 13)),
+                          style: const TextStyle(fontSize: 13)),
                     ),
                   ),
                   Tab(
                     child: Align(
                       child: Text("In Program",
-                          style: const TextStyle(
-                              color: Colors.black, fontSize: 13)),
+                          style: const TextStyle(fontSize: 13)),
                     ),
                   ),
                   Tab(
                     child: Align(
                       alignment: Alignment.center,
-                      child: Text("L'altro",
-                          style: const TextStyle(
-                              color: Colors.black, fontSize: 13)),
+                      child:
+                          Text("L'altro", style: const TextStyle(fontSize: 13)),
                     ),
                   ),
                 ],
