@@ -16,11 +16,8 @@ class _OptionsTabPageState extends State<OptionsTabPage> {
         ElevatedButton.styleFrom(textStyle: const TextStyle(fontSize: 20));
     return Scaffold(
       // ignore: prefer_const_constructors
-      appBar: CustomAppBar(
-        showBackButton: true,
-      ),
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 25.0),
+        padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 60.0),
         child: Column(children: [
           Container(
             child: Column(
@@ -53,16 +50,23 @@ class _OptionsTabPageState extends State<OptionsTabPage> {
           ),
           Expanded(
             child: Center(
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  //BackGround
-                  primary: Colors.red,
-                  //Scritte bottone
-                  onPrimary: Colors.white,
-                ),
-                onPressed: () {},
-                child: const Text(
-                  "Disconnect",
+              child: Padding(
+                padding: EdgeInsets.only(top: 220),
+                child: SizedBox(
+                  width: 370.0,
+                  height: 60.0,
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      //BackGround
+                      primary: Colors.red,
+                      //Scritte bottone
+                      onPrimary: Colors.white,
+                    ),
+                    onPressed: () {},
+                    child: buildText(
+                      "Disconnect",
+                    ),
+                  ),
                 ),
               ),
             ),
@@ -71,6 +75,13 @@ class _OptionsTabPageState extends State<OptionsTabPage> {
       ),
     );
   }
+}
+
+Text buildText(String text) {
+  return Text(
+    text,
+    style: TextStyle(fontSize: 28),
+  );
 }
 
 Widget imageProfile() {

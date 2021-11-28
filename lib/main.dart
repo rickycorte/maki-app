@@ -91,47 +91,50 @@ class _MyHomePageState extends State<MyHomePage> {
           child: Container(
             color: Colors.red,
             // ignore: prefer_const_constructors
-            child: TabBar(
-              unselectedLabelColor: Colors.white,
-              indicatorSize: TabBarIndicatorSize.label,
-              indicator: BoxDecoration(
-                borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(10),
-                    topRight: Radius.circular(10)),
-                color: Colors.white,
+            child: Padding(
+              padding: EdgeInsets.only(top: 50),
+              child: TabBar(
+                unselectedLabelColor: Colors.white,
+                indicatorSize: TabBarIndicatorSize.label,
+                indicator: BoxDecoration(
+                  borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(10),
+                      topRight: Radius.circular(10)),
+                  color: Colors.white,
+                ),
+                // ignore: prefer_const_literals_to_create_immutables
+                tabs: [
+                  Tab(
+                    child: Align(
+                      child: Text("Watching",
+                          style: const TextStyle(
+                              color: Colors.black, fontSize: 13)),
+                    ),
+                  ),
+                  Tab(
+                    child: Align(
+                      child: Text("Completed",
+                          style: const TextStyle(
+                              color: Colors.black, fontSize: 13)),
+                    ),
+                  ),
+                  Tab(
+                    child: Align(
+                      child: Text("In Program",
+                          style: const TextStyle(
+                              color: Colors.black, fontSize: 13)),
+                    ),
+                  ),
+                  Tab(
+                    child: Align(
+                      alignment: Alignment.center,
+                      child: Text("L'altro",
+                          style: const TextStyle(
+                              color: Colors.black, fontSize: 13)),
+                    ),
+                  ),
+                ],
               ),
-              // ignore: prefer_const_literals_to_create_immutables
-              tabs: [
-                Tab(
-                  child: Align(
-                    child: Text("Watching",
-                        style:
-                            const TextStyle(color: Colors.black, fontSize: 13)),
-                  ),
-                ),
-                Tab(
-                  child: Align(
-                    child: Text("Completed",
-                        style:
-                            const TextStyle(color: Colors.black, fontSize: 13)),
-                  ),
-                ),
-                Tab(
-                  child: Align(
-                    child: Text("In Program",
-                        style:
-                            const TextStyle(color: Colors.black, fontSize: 13)),
-                  ),
-                ),
-                Tab(
-                  child: Align(
-                    alignment: Alignment.center,
-                    child: Text("L'altro",
-                        style:
-                            const TextStyle(color: Colors.black, fontSize: 13)),
-                  ),
-                ),
-              ],
             ),
           ),
         ),
