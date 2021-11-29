@@ -37,65 +37,54 @@ class _OptionsTabPageState extends State<OptionsTabPage> {
     );
   }
 
+  Widget _profileAndSettings(BuildContext context) {
+   return  Column(
+     children: [
+       imageProfile(widget.profilePicture),
+       // ignore: prefer_const_constructors
+       Center(
+         child: Text(
+           widget.nome,
+           style:
+           const TextStyle(color: Colors.black, height: 2, fontSize: 35),
+         ),
+       ),
+       Center(
+         child: SwitchListTile(
+           title: const Text(
+             "Force Dark Mode",
+             style: TextStyle(color: Colors.black),
+           ),
+           value: false,
+           onChanged: (bool value) { setState(() {},);
+           },
+         ),
+       ),
+     ],
+   );
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      // ignore: prefer_const_constructors
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 60.0),
-        child: Column(children: [
-          Column(
-            children: [
-              imageProfile(widget.profilePicture),
-              // ignore: prefer_const_constructors
-              Center(
-                child: Text(
-                  widget.nome,
-                  style:
-                      const TextStyle(color: Colors.black, height: 3, fontSize: 35),
-                ),
-              ),
-              Center(
-                child: SwitchListTile(
-                  title: const Text(
-                    "Force Dark Mode",
-                    style: TextStyle(color: Colors.black),
-                  ),
-                  value: false,
-                  onChanged: (bool value) {
-                    setState(
-                      () {},
-                    );
-                  },
-                ),
-              ),
-            ],
-          ),
-          Expanded(
-            child: Center(
-              child: Padding(
-                padding: EdgeInsets.only(top: 220),
-                child: SizedBox(
-                  width: 370.0,
-                  height: 60.0,
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      //BackGround
-                      primary: Colors.red,
-                      //Scritte bottone
-                      onPrimary: Colors.white,
-                    ),
-                    onPressed: () { User.logout(); LoginPage.refreshLogin(context); },
-                    child: buildText(
-                      "Disconnect",
-                    ),
-                  ),
-                ),
-              ),
+    return Stack(
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(left: 20.0, right: 20.0, top: 80.0, bottom: 10.0),
+          child: _profileAndSettings(context),
+        ),
+        Positioned(
+          bottom: 20,
+          right: 20,
+          left: 20,
+          child: SizedBox(
+            height: 60.0,
+            child: ElevatedButton(
+              onPressed: () => () { User.logout(); LoginPage.refreshLogin(context); },
+              child: const Text("Logout"),
             ),
           ),
-        ]),
-      ),
+        )
+      ]
     );
   }
 }

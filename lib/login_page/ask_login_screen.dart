@@ -18,7 +18,7 @@ class AskLoginScreen extends StatelessWidget{
           mainAxisSize: MainAxisSize.max,
           children: [
             Padding(
-                padding: const EdgeInsets.only(top: 60.0, left: 100.0, right: 100.0, bottom: 60.0),
+                padding: const EdgeInsets.only(top: 80.0, left: 100.0, right: 100.0, bottom: 60.0),
                 child: Image.asset("assets/images/login_hi.png")
             ),
             Column(
