@@ -46,9 +46,12 @@ class AskLoginScreen extends StatelessWidget{
             bottom: 20,
             right: 20,
             left: 20,
-            child: ElevatedButton(
-              onPressed: () => onLoginButtonPressed(),
-              child: const Text("Login with Anilist"),
+            child: SizedBox(
+              height: 60.0,
+              child: ElevatedButton(
+                onPressed: () => onLoginButtonPressed(),
+                child: const Text("Login with Anilist"),
+              ),
             ),
 
           )

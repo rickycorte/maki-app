@@ -5,19 +5,29 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:maki/login_page/ask_login_screen.dart';
 import 'package:maki/models/user.dart';
 
+import '../main.dart';
+
 class LoginPage extends StatefulWidget {
 
   @override
   State<LoginPage> createState() => _LoginPageState();
+
+  static void refreshLogin(BuildContext context) {
+    context.findAncestorStateOfType<_LoginPageState>()?.refresh();
+  }
+
 }
 
 class _LoginPageState extends State<LoginPage> {
 
-  onLoginButtonPressed() async {
+  _onLoginButtonPressed() async {
     await User.web_login();
     setState(() {});
   }
 
+  void refresh() {
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -27,16 +37,16 @@ class _LoginPageState extends State<LoginPage> {
         builder: (context, snapshot) {
 
           if(snapshot.connectionState == ConnectionState.done) {
-            if(!snapshot.hasError && snapshot.hasData && snapshot.data as bool) {
+            if(User.current != null) {
               // logged in
-              return Center( child: Text("HELLO ${User.current!.username}!"));
+              return const MyApp();
             } else {
               // not logged in or issues with login
-              return AskLoginScreen(onLoginButtonPressed: onLoginButtonPressed,);
+              return AskLoginScreen(onLoginButtonPressed: _onLoginButtonPressed,);
             }
 
           } else {
-            return const Center(child: CircularProgressIndicator(),);
+            return const SizedBox.shrink();
           }
         },
       ),

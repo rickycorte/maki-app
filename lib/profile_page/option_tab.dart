@@ -1,52 +1,75 @@
 import 'package:flutter/material.dart';
-import 'package:maki/common/custom_appbar.dart';
+import 'package:maki/login_page/login_page.dart';
+import 'package:maki/models/user.dart';
 
 class OptionsTabPage extends StatefulWidget {
   String nome;
-  OptionsTabPage({Key? key, required this.nome}) : super(key: key);
+  String? profilePicture;
+
+  OptionsTabPage({Key? key, required this.nome, this.profilePicture}) : super(key: key);
 
   @override
   State<OptionsTabPage> createState() => _OptionsTabPageState();
 }
 
 class _OptionsTabPageState extends State<OptionsTabPage> {
+
+
+  Text buildText(String text) {
+    return Text(
+      text,
+      style: TextStyle(fontSize: 28),
+    );
+  }
+
+  Widget imageProfile(String? imgUrl) {
+    return Center(
+      child: Stack(
+        // ignore: prefer_const_literals_to_create_immutables
+        children: [
+          CircleAvatar(
+            radius: 80.0,
+            backgroundColor: Colors.grey,
+            foregroundImage: imgUrl != null ? Image.network(imgUrl).image : null,
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    final ButtonStyle style =
-        ElevatedButton.styleFrom(textStyle: const TextStyle(fontSize: 20));
     return Scaffold(
       // ignore: prefer_const_constructors
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 60.0),
         child: Column(children: [
-          Container(
-            child: Column(
-              children: [
-                imageProfile(),
-                // ignore: prefer_const_constructors
-                Center(
-                  child: Text(
-                    widget.nome,
-                    style:
-                        TextStyle(color: Colors.black, height: 3, fontSize: 35),
-                  ),
+          Column(
+            children: [
+              imageProfile(widget.profilePicture),
+              // ignore: prefer_const_constructors
+              Center(
+                child: Text(
+                  widget.nome,
+                  style:
+                      const TextStyle(color: Colors.black, height: 3, fontSize: 35),
                 ),
-                Center(
-                  child: SwitchListTile(
-                    title: Text(
-                      "Force Dark Mode",
-                      style: TextStyle(color: Colors.black),
-                    ),
-                    value: false,
-                    onChanged: (bool value) {
-                      setState(
-                        () {},
-                      );
-                    },
+              ),
+              Center(
+                child: SwitchListTile(
+                  title: const Text(
+                    "Force Dark Mode",
+                    style: TextStyle(color: Colors.black),
                   ),
+                  value: false,
+                  onChanged: (bool value) {
+                    setState(
+                      () {},
+                    );
+                  },
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
           Expanded(
             child: Center(
@@ -62,7 +85,7 @@ class _OptionsTabPageState extends State<OptionsTabPage> {
                       //Scritte bottone
                       onPrimary: Colors.white,
                     ),
-                    onPressed: () {},
+                    onPressed: () { User.logout(); LoginPage.refreshLogin(context); },
                     child: buildText(
                       "Disconnect",
                     ),
@@ -77,24 +100,4 @@ class _OptionsTabPageState extends State<OptionsTabPage> {
   }
 }
 
-Text buildText(String text) {
-  return Text(
-    text,
-    style: TextStyle(fontSize: 28),
-  );
-}
 
-Widget imageProfile() {
-  return Center(
-    child: Stack(
-      // ignore: prefer_const_literals_to_create_immutables
-      children: [
-        const CircleAvatar(
-          radius: 80.0,
-          backgroundColor: Colors.grey,
-          backgroundImage: null,
-        ),
-      ],
-    ),
-  );
-}

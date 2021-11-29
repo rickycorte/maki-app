@@ -7,6 +7,7 @@ import 'package:maki/common/anime_cover_grid.dart';
 import 'package:maki/demo_runner.dart';
 import 'common/custom_appbar.dart';
 import 'common/custom_bottom_bar.dart';
+import 'models/user.dart';
 import 'profile_page/option_tab.dart';
 
 void main() {
@@ -119,7 +120,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                   Tab(
                     child: Align(
-                      child: Text("In Program",
+                      child: Text("Planning",
                           style: const TextStyle(fontSize: 13)),
                     ),
                   ),
@@ -127,7 +128,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     child: Align(
                       alignment: Alignment.center,
                       child:
-                          Text("L'altro", style: const TextStyle(fontSize: 13)),
+                          Text("Dropped", style: const TextStyle(fontSize: 13)),
                     ),
                   ),
                 ],
@@ -152,9 +153,9 @@ class _MyHomePageState extends State<MyHomePage> {
       case 1:
         return _userList();
       case 2:
-        return OptionsTabPage(nome: 'xDevily');
+        return OptionsTabPage(nome: User.current?.username ?? 'Test User', profilePicture: User.current?.profilePicture,);
       default:
-        return _futureRecommendationGrid("xDevily");
+        return _futureRecommendationGrid(User.current?.username ?? 'xDevily');
     }
   }
 
