@@ -11,19 +11,19 @@ void main() async {
 }
 
 class RunnerBody extends StatelessWidget {
-
   final AnimeDetails sampleAnime = AnimeDetails(
       anilistID: 1,
       malID: 1,
       title: "test anime",
-      coverUrl: "https://s4.anilist.co/file/anilistcdn/media/anime/cover/large/bx129898-FRUzDtPhRigt.jpg",
+      coverUrl:
+          "https://s4.anilist.co/file/anilistcdn/media/anime/cover/large/bx129898-FRUzDtPhRigt.jpg",
       score: 87,
       genres: ["action", "whatever", "raccoons"],
       year: 2050,
       format: "Piscina",
-      description: "Racoonz are nasty creatures. They eat your trash, they take over you house. You should be scared!",
-      trailerUrl: "https://www.youtube.com/watch?v=VDgsP-6TPFw"
-  );
+      description:
+          "Racoonz are nasty creatures. They eat your trash, they take over you house. You should be scared!",
+      trailerUrl: "https://www.youtube.com/watch?v=VDgsP-6TPFw");
 
   RunnerBody({Key? key}) : super(key: key);
 
@@ -48,8 +48,9 @@ class RunnerBody extends StatelessWidget {
             Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => AnimeDetailsPage(anilistID: 21202,))
-            )
+                    builder: (context) => AnimeDetailsPage(
+                          anilistID: 21202,
+                        )))
           },
         ),
         ElevatedButton(
@@ -58,19 +59,16 @@ class RunnerBody extends StatelessWidget {
             Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => AnimeDetailsPage(anilistID:21324,))
-            )
+                    builder: (context) => AnimeDetailsPage(
+                          anilistID: 21324,
+                        )))
           },
         ),
-
         ElevatedButton(
           child: const Text("Open home"),
           onPressed: () => {
             Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => const MyApp())
-            )
+                context, MaterialPageRoute(builder: (context) => const MyApp()))
           },
         ),
 
