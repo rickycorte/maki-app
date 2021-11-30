@@ -5,10 +5,62 @@ import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_web_auth/flutter_web_auth.dart';
 import 'package:http/http.dart' as http;
+import 'package:maki/models/anime_list.dart';
+
+import 'anime.dart';
 
 const _access_token_key = "access_token";
 
+// TODO: remove hentai from fetched lists :3
+// cultured things may not be the best to show
+const _query_get_anime_list = """
+query (\$userId: Int, \$userName: String, \$type: MediaType) {
+  MediaListCollection(userId: \$userId, userName: \$userName, type: \$type) {
+    lists {
+      name
+      entries {
+        ...mediaListEntry
+      }
+    }
+    user {
+      mediaListOptions {
+        scoreFormat
+      }
+    }
+  }
+}
+
+fragment mediaListEntry on MediaList {
+  mediaId
+  status
+  score
+  media {
+    title {
+      userPreferred
+    }
+    coverImage {
+      large
+    }
+  }
+}
+""";
+
+const _query_get_logged_user = """
+query {
+    user: Viewer {
+      name
+      id
+      avatar {
+        large
+      }
+    }
+  }
+""";
+
+enum AnimeSublist {completed, watching, planning, dropped }
+
 class User {
+
 
   // current user logged in, may be null
   static User? current;
@@ -17,9 +69,48 @@ class User {
   final String profilePicture;
   final String token;
 
+  AnimeList? _animeList;
 
   User({required this.username, required this.profilePicture, required this.token});
 
+
+  /// call this function to retrive the user list
+  /// if possibile this function returns a cached version
+  /// but is possibile to force the fetch by setting forceUpdate to true
+  Future<AnimeList> getAnimeList({bool forceUpdate = false}) async {
+
+    if(_animeList != null && !forceUpdate) {
+      return Future.value(_animeList);
+    }
+
+    var apiRes = await _authenticatedAnilistRequest(
+        token,
+        _query_get_anime_list,
+        variables: jsonEncode({"userName": username, "type": "ANIME"})
+    );
+
+    _animeList = AnimeList.fromAnilist(apiRes!);
+
+    return Future.value(_animeList);
+  }
+
+  Future<List<Anime>> getAnimeSublist(AnimeSublist sublist) async {
+    var list = await getAnimeList();
+
+    switch(sublist) {
+      case AnimeSublist.completed:
+        return list.completed;
+
+      case AnimeSublist.watching:
+        return list.watching;
+
+      case AnimeSublist.dropped:
+        return list.dropped;
+
+      case AnimeSublist.planning:
+        return list.planning;
+    }
+  }
 
 
   //***********************************************************************************
@@ -38,6 +129,8 @@ class User {
     if(token != null)
     {
         current = await User.fromToken(token);
+        // prefetch anime list
+        current!.getAnimeList();
         return Future.value(true);
     }
     else {
@@ -84,20 +177,7 @@ class User {
   ///fetch user information using the token obtained from oauth
   static Future<User> fromToken(String token) async {
 
-    const query = """
-    query {
-        user: Viewer {
-          name
-          id
-          avatar {
-            large
-          }
-        }
-      }
-    """;
-
-
-    var resp = await _authenticatedAnilistRequest(token, query);
+    var resp = await _authenticatedAnilistRequest(token, _query_get_logged_user);
 
     if(resp == null) {
       throw Exception("Unable to login");

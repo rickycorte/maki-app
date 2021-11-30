@@ -12,14 +12,13 @@ class AnimeCoverGrid extends StatefulWidget implements PreferredSizeWidget {
   _AnimeCoverGridState createState() => new _AnimeCoverGridState();
 
   @override
-  // TODO: implement preferredSize
   Size get preferredSize => throw UnimplementedError();
 }
 
-// CREARE WIDGET CHE MI RESTITUISCE LA DETAILS PAGE DELL'ANIME CORRISPONDENTE
 
 class _AnimeCoverGridState extends State<AnimeCoverGrid> {
   // e tappando sulla card poi viene aperta la pagina dei details
+  // TODO: cache images locally
   Widget _makeAnimeCard(Anime anime) {
     return GestureDetector(
       onTap: () {
@@ -36,6 +35,7 @@ class _AnimeCoverGridState extends State<AnimeCoverGrid> {
 
   @override
   Widget build(BuildContext context) {
+    // TODO: empty list page
     return GridView.count(
         crossAxisCount: 2,
         childAspectRatio: 1/1.5,

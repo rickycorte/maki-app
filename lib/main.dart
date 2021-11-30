@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:maki/anime_list_tab/anime_list_tab.dart';
+import 'package:maki/common/future_anime_cover_grid.dart';
 import 'package:maki/models/anime.dart';
 import 'package:maki/common/anime_cover_grid.dart';
 import 'package:maki/demo_runner.dart';
@@ -138,10 +139,10 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
         body: TabBarView(
           children: [
-            Icon(Icons.directions_car),
-            Icon(Icons.directions_transit),
-            Icon(Icons.directions_bike),
-            Icon(Icons.directions_bike),
+            FutureAnimeCoverGrid(futureList: User.current!.getAnimeSublist(AnimeSublist.watching)),
+            FutureAnimeCoverGrid(futureList: User.current!.getAnimeSublist(AnimeSublist.completed)),
+            FutureAnimeCoverGrid(futureList: User.current!.getAnimeSublist(AnimeSublist.planning)),
+            FutureAnimeCoverGrid(futureList: User.current!.getAnimeSublist(AnimeSublist.dropped)),
           ],
         ),
       ),
