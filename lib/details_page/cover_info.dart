@@ -72,50 +72,68 @@ class CoverInfo extends StatelessWidget {
       formattedGenres += " - " + anime.genres[i];
     }
 
-    formattedGenres = formattedGenres.isNotEmpty ? formattedGenres.substring(3) : formattedGenres; // remove the " - " characters added by the first element
+    formattedGenres = formattedGenres.isNotEmpty
+        ? formattedGenres.substring(3)
+        : formattedGenres; // remove the " - " characters added by the first element
 
     return Container(
         alignment: Alignment.center,
         child:
             Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-          Text(
-            anime.title,
-            textAlign: TextAlign.center,
-            style: Theme.of(context).textTheme.headline5,
+          SizedBox(
+            height: 45.0,
+            child: ElevatedButton(
+              onPressed: () => () {},
+              child: const Text("Add To My List"),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 15.0),
+            child: Text(
+              anime.title,
+              textAlign: TextAlign.center,
+              style: Theme.of(context).textTheme.headline5,
+            ),
           ),
           if (formattedGenres.isNotEmpty)
             Text(
               formattedGenres,
               textAlign: TextAlign.center,
-              style: TextStyle(color: Theme.of(context).primaryColor, fontWeight: FontWeight.bold),
+              style: TextStyle(
+                  color: Theme.of(context).primaryColor,
+                  fontWeight: FontWeight.bold),
             ),
         ]));
   }
 
   @override
   Widget build(BuildContext context) {
-
     const elementPadding = 20.0;
 
-    return Column(children: [
-      IntrinsicHeight(
+    return Column(
+      children: [
+        IntrinsicHeight(
           child: Row(
-        children: [
-          // image
-          Expanded(child: _roundedCover(anime.coverUrl)),
-          // side infos
-          Expanded(child: _scoreAndSeasonInfo(context))
-        ],
-      )),
-      const SizedBox(height: elementPadding),
-      _buildTitleBlock(context),
-
-      const SizedBox(height: elementPadding),
-      Text(
-        anime.description.replaceAll("<br>", "\n").replaceAll(RegExp(r"<\/?b>|<\/?i>"), ""),
-        textAlign: TextAlign.center,
-      )
-
-    ]);
+            children: [
+              // image
+              Expanded(child: _roundedCover(anime.coverUrl)),
+              // side infos
+              Expanded(child: _scoreAndSeasonInfo(context))
+            ],
+          ),
+        ),
+        const SizedBox(height: elementPadding),
+        _buildTitleBlock(context),
+        const SizedBox(height: elementPadding),
+        Text(
+          anime.description
+              .replaceAll("<br>", "\n")
+              .replaceAll(RegExp(r"<\/?b>|<\/?i>"), ""),
+          overflow: TextOverflow.fade,
+          maxLines: 3,
+          textAlign: TextAlign.center,
+        ),
+      ],
+    );
   }
 }
