@@ -170,6 +170,7 @@ class User {
   /// if no current user this function does nothing
   static void logout() {
 
+    debugPrint("Loggin out");
     current = null;
     _storage.delete(key: _access_token_key);
   }
