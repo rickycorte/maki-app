@@ -42,6 +42,7 @@ fragment mediaListEntry on MediaList {
     coverImage {
       large
     }
+    isAdult
   }
 }
 """;

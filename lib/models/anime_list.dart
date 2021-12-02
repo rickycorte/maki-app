@@ -35,6 +35,12 @@ class AnimeList {
               title: entry["media"]["title"]["userPreferred"],
               coverUrl: entry["media"]["coverImage"]["large"]
           );
+          
+          //skip adult
+          if(entry["media"]["isAdult"]) {
+            continue;
+          }
+
           // add to correct sublist
           switch(entry["status"]) {
             case "COMPLETED":
