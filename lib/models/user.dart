@@ -218,10 +218,16 @@ class User {
 
     if(token != null)
     {
+      try {
         current = await User.fromToken(token);
         // prefetch anime list
         current!.getAnimeList();
         return Future.value(true);
+      } catch(e) {
+        // login failed
+        debugPrint(e.toString());
+        return Future.value(false);
+      }
     }
     else {
       return Future.value(false);
