@@ -139,10 +139,18 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
         body: TabBarView(
           children: [
-            FutureAnimeCoverGrid(futureList: User.current!.getAnimeSublist(AnimeSublist.watching)),
-            FutureAnimeCoverGrid(futureList: User.current!.getAnimeSublist(AnimeSublist.completed)),
-            FutureAnimeCoverGrid(futureList: User.current!.getAnimeSublist(AnimeSublist.planning)),
-            FutureAnimeCoverGrid(futureList: User.current!.getAnimeSublist(AnimeSublist.dropped)),
+            FutureAnimeCoverGrid(
+                futureList:
+                    User.current!.getAnimeSublist(AnimeSublist.watching)),
+            FutureAnimeCoverGrid(
+                futureList:
+                    User.current!.getAnimeSublist(AnimeSublist.completed)),
+            FutureAnimeCoverGrid(
+                futureList:
+                    User.current!.getAnimeSublist(AnimeSublist.planning)),
+            FutureAnimeCoverGrid(
+                futureList:
+                    User.current!.getAnimeSublist(AnimeSublist.dropped)),
           ],
         ),
       ),
@@ -154,7 +162,10 @@ class _MyHomePageState extends State<MyHomePage> {
       case 1:
         return _userList();
       case 2:
-        return OptionsTabPage(nome: User.current?.username ?? 'Test User', profilePicture: User.current?.profilePicture,);
+        return OptionsTabPage(
+          nome: User.current?.username ?? 'Test User',
+          profilePicture: User.current?.profilePicture,
+        );
       default:
         return _futureRecommendationGrid(User.current?.username ?? 'xDevily');
     }
