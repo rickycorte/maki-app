@@ -1,11 +1,10 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+import 'package:maki/home_page/home_page.dart';
 import 'package:maki/login_page/ask_login_screen.dart';
 import 'package:maki/models/user.dart';
 
-import '../main.dart';
 
 class LoginPage extends StatefulWidget {
 
@@ -39,7 +38,7 @@ class _LoginPageState extends State<LoginPage> {
           if(snapshot.connectionState == ConnectionState.done) {
             if(User.current != null) {
               // logged in
-              return const MyApp();
+              return const HomePage();
             } else {
               // not logged in or issues with login
               return AskLoginScreen(onLoginButtonPressed: _onLoginButtonPressed,);
