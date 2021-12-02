@@ -8,6 +8,7 @@ import 'package:http/http.dart' as http;
 import 'package:maki/models/anime_list.dart';
 
 import 'anime.dart';
+import 'event.dart';
 
 const _access_token_key = "access_token";
 
@@ -57,6 +58,23 @@ query {
   }
 """;
 
+const _query_add_anime_to_list = """
+mutation (\$mediaId: Int, \$status: MediaListStatus) {
+  SaveMediaListEntry (mediaId: \$mediaId, status: \$status) {
+    id
+    status
+   }
+}
+""";
+
+const _query_remove_anime_from_list = """
+mutation (\$mediaId: Int) {
+  DeleteMediaListEntry (id: \$mediaId) {
+  deleted
+  }
+}
+""";
+
 enum AnimeSublist {completed, watching, planning, dropped }
 
 class User {
@@ -70,6 +88,8 @@ class User {
   final String token;
 
   AnimeList? _animeList;
+
+  SimpleEvent onAnimeListUpdate = SimpleEvent();
 
   User({required this.username, required this.profilePicture, required this.token});
 
@@ -112,6 +132,76 @@ class User {
     }
   }
 
+  /// add anime to the user planning list
+  /// if something went wrong this functions returns false
+  Future<bool> addToPlanning(Anime anime) async {
+
+    var res = await _authenticatedAnilistRequest(
+        token,
+        _query_add_anime_to_list,
+        variables: jsonEncode({"mediaId": anime.anilistID, "status": "PLANNING"})
+        );
+
+    if(res == null) {
+      return Future.value(false);
+    }
+
+    // refetch list to update
+    getAnimeList(forceUpdate: true);
+
+    // send callback
+    onAnimeListUpdate.call();
+
+    return Future.value(true);
+
+  }
+
+  /// remove anime to the user planning list
+  /// if something went wrong this functions returns false
+  Future<bool> removeFromList(Anime anime) async {
+
+    var res = await _authenticatedAnilistRequest(
+        token,
+        _query_remove_anime_from_list,
+        variables: jsonEncode({"mediaId": anime.anilistID})
+    );
+
+    if(res == null) {
+      return Future.value(false);
+    }
+
+    // refetch list to update
+    getAnimeList(forceUpdate: true);
+
+    // send callback
+    onAnimeListUpdate.call();
+
+    return Future.value(true);
+
+  }
+
+
+  bool _hasAnimeInSublist(List<Anime> sublist, Anime anime) {
+    for(var item in sublist) {
+      if(item.anilistID == anime.anilistID) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  /// check if the user has an anime in its list
+  bool hasAnimeInList(Anime anime) {
+
+    return _animeList != null && (
+        _hasAnimeInSublist(_animeList!.watching, anime) ||
+        _hasAnimeInSublist(_animeList!.completed, anime) ||
+        _hasAnimeInSublist(_animeList!.planning, anime) ||
+        _hasAnimeInSublist(_animeList!.dropped, anime)
+    );
+
+  }
 
   //***********************************************************************************
 

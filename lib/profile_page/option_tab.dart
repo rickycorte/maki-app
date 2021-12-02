@@ -82,7 +82,7 @@ class _OptionsTabPageState extends State<OptionsTabPage> {
         child: SizedBox(
           height: 60.0,
           child: ElevatedButton(
-            onPressed: () => () {
+            onPressed: () {
               User.logout();
               LoginPage.refreshLogin(context);
             },
