@@ -18,12 +18,21 @@ class _HomePageState extends State<HomePage> {
   Widget? _cachedRecommendationWidget;
   late Color colorTextTabBar = Colors.white;
 
-  //Classe per svolgere l'azione dopo il refresh indicator
+
+  _HomePageState() {
+      User.current?.onAnimeListUpdate.add(refreshUserList);
+      debugPrint("Added user list refresh callback");
+  }
+
   Future<bool> refreshGridBar() async {
     _cachedRecommendationWidget = null;
     setState(() {});
 
     return await Future.value(true);
+  }
+
+  void refreshUserList() {
+    setState(() {});
   }
 
   Widget _futureRecommendationGrid(username) {
@@ -153,5 +162,11 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    User.current?.onAnimeListUpdate.remove(refreshUserList);
+    super.dispose();
   }
 }
