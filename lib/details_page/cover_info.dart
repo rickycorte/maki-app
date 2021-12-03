@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:maki/models/anime_details.dart';
+import 'package:maki/models/user.dart';
 
 class CoverInfo extends StatefulWidget {
   AnimeDetails? anime;
@@ -10,9 +11,16 @@ class CoverInfo extends StatefulWidget {
   State<CoverInfo> createState() => CoverInfoState();
 }
 
-//TODO: ho mosso tutto il blocco superiore fino alla descrizione cosi possiamo alterare facilmente tutto il layout di questi elementi
-
 class CoverInfoState extends State<CoverInfo> {
+  //variabile per tener conto delle linee da far vedere nella descrizione dell'anime
+  int? number_of_line = null;
+
+  //Variabile per nascondere la descrizione con effetto fade oppure no
+  TextOverflow descripton_exposure = TextOverflow.visible;
+
+  //Variabile per controllare la forma del botton con cui nascondere la descrizione
+  IconData botton_description = Icons.keyboard_arrow_down_outlined;
+
   Widget _roundedCover(String url, {double radius = 10}) {
     return ClipRRect(
       borderRadius: BorderRadius.circular(radius),
@@ -88,13 +96,6 @@ class CoverInfoState extends State<CoverInfo> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          SizedBox(
-            height: 45.0,
-            child: ElevatedButton(
-              onPressed: () => () {},
-              child: const Text("Add To My List"),
-            ),
-          ),
           Padding(
             padding: const EdgeInsets.only(top: 15.0),
             child: Text(
@@ -117,7 +118,7 @@ class CoverInfoState extends State<CoverInfo> {
           SizedBox(
             height: 45.0,
             child: ElevatedButton(
-              onPressed: () => () {},
+              onPressed: () => User.current!.addToPlanning(widget.anime!),
               child: const Text("Add To My List"),
             ),
           ),
@@ -126,12 +127,26 @@ class CoverInfoState extends State<CoverInfo> {
     );
   }
 
+  //Funzione per cambiare lo stato per nascondere o no la descrizione
+  void updateDescription() {
+    setState(
+      () {
+        if (number_of_line == null) {
+          number_of_line = 3;
+          descripton_exposure = TextOverflow.fade;
+          botton_description = Icons.keyboard_arrow_down_outlined;
+        } else {
+          number_of_line = null;
+          descripton_exposure = TextOverflow.visible;
+          botton_description = Icons.keyboard_arrow_up_outlined;
+        }
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     const elementPadding = 20.0;
-    TextOverflow descripton_exposure = TextOverflow.visible;
-    // ignore: avoid_init_to_null
-    int? number_of_line = null;
 
     return Column(
       children: [
@@ -152,8 +167,8 @@ class CoverInfoState extends State<CoverInfo> {
           widget.anime!.description
               .replaceAll("<br>", "\n")
               .replaceAll(RegExp(r"<\/?b>|<\/?i>"), ""),
-          overflow: TextOverflow.fade,
-          maxLines: 3,
+          overflow: descripton_exposure,
+          maxLines: number_of_line,
           textAlign: TextAlign.center,
         ),
         Center(
@@ -167,22 +182,12 @@ class CoverInfoState extends State<CoverInfo> {
               child: IconButton(
                 // ignore: prefer_const_constructors
                 icon: Icon(
-                  Icons.keyboard_arrow_up_outlined,
+                  botton_description,
                   size: 25,
                   color: Colors.black,
                 ),
                 onPressed: () {
-                  setState(
-                    () {
-                      if (number_of_line == null) {
-                        number_of_line = 3;
-                        descripton_exposure = TextOverflow.visible;
-                      } else {
-                        number_of_line = null;
-                        descripton_exposure = TextOverflow.fade;
-                      }
-                    },
-                  );
+                  updateDescription();
                 },
               ),
             ),
