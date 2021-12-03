@@ -1,13 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:maki/models/anime_details.dart';
 
-//TODO: ho mosso tutto il blocco superiore fino alla descrizione cosi possiamo alterare facilmente tutto il layout di questi elementi
-
-class CoverInfo extends StatelessWidget {
-  AnimeDetails anime;
+class CoverInfo extends StatefulWidget {
+  AnimeDetails? anime;
 
   CoverInfo({Key? key, required this.anime}) : super(key: key);
 
+  @override
+  State<CoverInfo> createState() => CoverInfoState();
+}
+
+//TODO: ho mosso tutto il blocco superiore fino alla descrizione cosi possiamo alterare facilmente tutto il layout di questi elementi
+
+class CoverInfoState extends State<CoverInfo> {
   Widget _roundedCover(String url, {double radius = 10}) {
     return ClipRRect(
       borderRadius: BorderRadius.circular(radius),
@@ -18,16 +23,18 @@ class CoverInfo extends StatelessWidget {
   Widget _scoreAndSeasonInfo(context,
       {Alignment containerAlignment = Alignment.topRight,
       TextAlign textAlignment = TextAlign.right}) {
-    String scoreText = "SCORE\n${anime.score}";
+    String scoreText = "SCORE\n${widget.anime!.score}";
     String seasonText =
-        "SEASON\n${anime.season} ${anime.year ?? "Unknown year"}";
-    String formatText = "FORMAT\n${anime.format ?? "Unknown format"}";
+        "SEASON\n${widget.anime!.season} ${widget.anime!.year ?? "Unknown year"}";
+    String formatText = "FORMAT\n${widget.anime!.format ?? "Unknown format"}";
 
-    if (anime.episodeCount != null && anime.episodeMinutes != null) {
-      formatText += "\n${anime.episodeCount} eps of ${anime.episodeMinutes}min";
+    if (widget.anime!.episodeCount != null &&
+        widget.anime!.episodeMinutes != null) {
+      formatText +=
+          "\n${widget.anime!.episodeCount} eps of ${widget.anime!.episodeMinutes}min";
     }
 
-    String statusText = "STATUS\n${anime.airStatus}";
+    String statusText = "STATUS\n${widget.anime!.airStatus}";
 
     final theme = Theme.of(context);
 
@@ -68,8 +75,8 @@ class CoverInfo extends StatelessWidget {
   Widget _buildTitleBlock(context) {
     // prepare data to output
     String formattedGenres = "";
-    for (int i = 0; i < anime.genres.length; i++) {
-      formattedGenres += " - " + anime.genres[i];
+    for (int i = 0; i < widget.anime!.genres.length; i++) {
+      formattedGenres += " - " + widget.anime!.genres[i];
     }
 
     formattedGenres = formattedGenres.isNotEmpty
@@ -77,9 +84,10 @@ class CoverInfo extends StatelessWidget {
         : formattedGenres; // remove the " - " characters added by the first element
 
     return Container(
-        alignment: Alignment.center,
-        child:
-            Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+      alignment: Alignment.center,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
           SizedBox(
             height: 45.0,
             child: ElevatedButton(
@@ -90,25 +98,40 @@ class CoverInfo extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(top: 15.0),
             child: Text(
-              anime.title,
+              widget.anime!.title,
               textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.headline5,
             ),
           ),
           if (formattedGenres.isNotEmpty)
-            Text(
-              formattedGenres,
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                  color: Theme.of(context).primaryColor,
-                  fontWeight: FontWeight.bold),
+            Padding(
+              padding: EdgeInsets.only(bottom: 15),
+              child: Text(
+                formattedGenres,
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                    color: Theme.of(context).primaryColor,
+                    fontWeight: FontWeight.bold),
+              ),
             ),
-        ]));
+          SizedBox(
+            height: 45.0,
+            child: ElevatedButton(
+              onPressed: () => () {},
+              child: const Text("Add To My List"),
+            ),
+          ),
+        ],
+      ),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     const elementPadding = 20.0;
+    TextOverflow descripton_exposure = TextOverflow.visible;
+    // ignore: avoid_init_to_null
+    int? number_of_line = null;
 
     return Column(
       children: [
@@ -116,7 +139,7 @@ class CoverInfo extends StatelessWidget {
           child: Row(
             children: [
               // image
-              Expanded(child: _roundedCover(anime.coverUrl)),
+              Expanded(child: _roundedCover(widget.anime!.coverUrl)),
               // side infos
               Expanded(child: _scoreAndSeasonInfo(context))
             ],
@@ -126,12 +149,44 @@ class CoverInfo extends StatelessWidget {
         _buildTitleBlock(context),
         const SizedBox(height: elementPadding),
         Text(
-          anime.description
+          widget.anime!.description
               .replaceAll("<br>", "\n")
               .replaceAll(RegExp(r"<\/?b>|<\/?i>"), ""),
           overflow: TextOverflow.fade,
           maxLines: 3,
           textAlign: TextAlign.center,
+        ),
+        Center(
+          // ignore: prefer_const_constructors
+          child: Padding(
+            padding: const EdgeInsets.only(top: 10),
+            // ignore: prefer_const_constructors
+            child: SizedBox(
+              height: 22.0,
+              width: 55.0,
+              child: IconButton(
+                // ignore: prefer_const_constructors
+                icon: Icon(
+                  Icons.keyboard_arrow_up_outlined,
+                  size: 25,
+                  color: Colors.black,
+                ),
+                onPressed: () {
+                  setState(
+                    () {
+                      if (number_of_line == null) {
+                        number_of_line = 3;
+                        descripton_exposure = TextOverflow.visible;
+                      } else {
+                        number_of_line = null;
+                        descripton_exposure = TextOverflow.fade;
+                      }
+                    },
+                  );
+                },
+              ),
+            ),
+          ),
         ),
       ],
     );
