@@ -41,7 +41,7 @@ class _HomePageState extends State<HomePage> {
     return _cachedRecommendationWidget as Widget;
   }
 
-  Widget _userList() {
+  Widget _userList(BuildContext context) {
     return DefaultTabController(
       length: 4,
       child: Scaffold(
@@ -52,7 +52,7 @@ class _HomePageState extends State<HomePage> {
             color: Colors.red,
             // ignore: prefer_const_constructors
             child: Padding(
-              padding: const EdgeInsets.only(top: 50),
+              padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top),
               child: const TabBar(
                 labelColor: Colors.black,
                 unselectedLabelColor: Colors.white,
@@ -106,10 +106,10 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget _getSelectedTab() {
+  Widget _getSelectedTab(BuildContext context) {
     switch (_selectedPageIndex) {
       case 1:
-        return _userList();
+        return _userList(context);
       case 2:
         return OptionsTabPage(nome: User.current?.username ?? 'Test User', profilePicture: User.current?.profilePicture,);
       default:
@@ -131,7 +131,7 @@ class _HomePageState extends State<HomePage> {
       },
       child: Scaffold(
         //appBar: const CustomAppBar(),
-        body: _getSelectedTab(),
+        body: _getSelectedTab(context),
         bottomNavigationBar: BottomNavigationBar(
           items: const [
             BottomNavigationBarItem(icon: Icon(Icons.star), label: "For You"),
