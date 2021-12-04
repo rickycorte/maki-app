@@ -57,7 +57,26 @@ class _FutureAnimeCoverGridState extends State<FutureAnimeCoverGrid> {
                 SingleChildScrollView(
                     physics: const AlwaysScrollableScrollPhysics(),
                     child: Container(
-                        child: const Center(child: Text('An error has occurred!'),),
+                        child: Center(
+                          child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children:  [
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(horizontal: 40),
+                                  child: Image.asset("assets/images/sorry.png"),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(top: 20.0),
+                                  child: Text(
+                                    'Sorry, something went wrong on our side.\nPlease retry!',
+                                    style: Theme.of(context).textTheme.subtitle1,
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ),
+                              ],
+                          ),
+                        ),
                         height: MediaQuery.of(context).size.height,
                     )
                 )
