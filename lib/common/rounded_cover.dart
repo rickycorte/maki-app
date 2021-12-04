@@ -1,6 +1,8 @@
 import 'dart:ui';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:skeleton_animation/skeleton_animation.dart';
 
 class RoundedCover extends StatefulWidget {
   // ignore: use_key_in_widget_constructors
@@ -28,9 +30,16 @@ class _CustomRoundedCoverState extends State<RoundedCover> {
       child: Stack(
         alignment: Alignment.topCenter,
         children: [
-          Ink.image(
-            image: NetworkImage(widget.url),
-            fit: BoxFit.cover,
+          Positioned(
+            top:0,
+            bottom: 0,
+            right: 0,
+            left:0,
+            child: CachedNetworkImage(
+              imageUrl: widget.url,
+              fit: BoxFit.fill,
+              placeholder: (ctz, progress) => Skeleton(),
+            ),
           ),
           Positioned(
               bottom: 0,

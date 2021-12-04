@@ -36,25 +36,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget _futureRecommendationGrid(username) {
-    _cachedRecommendationWidget ??= FutureBuilder<List<Anime>>(
-        future: fetchRecommendations(username),
-        builder: (context, snapshot) {
-          if (snapshot.hasError) {
-            return const Center(
-              child: Text('An error has occurred!'),
-            );
-          } else if (snapshot.hasData) {
-            return RefreshIndicator(
-              triggerMode: RefreshIndicatorTriggerMode.onEdge,
-              onRefresh: refreshGridBar,
-              child: AnimeCoverGrid(displayData: snapshot.data ?? []),
-            );
-          } else {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          }
-        });
+    _cachedRecommendationWidget ??= FutureAnimeCoverGrid(futureList: fetchRecommendations(username), onRefreshCallback: refreshGridBar,);
 
     return _cachedRecommendationWidget as Widget;
   }

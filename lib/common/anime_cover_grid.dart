@@ -6,10 +6,12 @@ import 'package:maki/common/rounded_cover.dart';
 class AnimeCoverGrid extends StatefulWidget implements PreferredSizeWidget {
   List<Anime> displayData = [];
 
-  AnimeCoverGrid({Key? key, required this.displayData}) : super(key: key);
+  final int elementsPerRow;
+
+  AnimeCoverGrid({Key? key, required this.displayData, this.elementsPerRow = 2}) : super(key: key);
 
   @override
-  _AnimeCoverGridState createState() => new _AnimeCoverGridState();
+  _AnimeCoverGridState createState() => _AnimeCoverGridState();
 
   @override
   Size get preferredSize => throw UnimplementedError();
@@ -37,7 +39,7 @@ class _AnimeCoverGridState extends State<AnimeCoverGrid> {
   Widget build(BuildContext context) {
     // TODO: empty list page
     return GridView.count(
-        crossAxisCount: 2,
+        crossAxisCount: widget.elementsPerRow,
         childAspectRatio: 1/1.5,
         children: widget.displayData.map((e) => _makeAnimeCard(e)).toList());
   }
