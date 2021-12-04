@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:maki/models/anime.dart';
 import 'package:maki/models/anime_details.dart';
 import 'package:maki/models/user.dart';
 
@@ -13,10 +14,10 @@ class CoverInfo extends StatefulWidget {
 
 class CoverInfoState extends State<CoverInfo> {
   //variabile per tener conto delle linee da far vedere nella descrizione dell'anime
-  int? number_of_line = null;
+  int? number_of_line = 3;
 
   //Variabile per nascondere la descrizione con effetto fade oppure no
-  TextOverflow descripton_exposure = TextOverflow.visible;
+  TextOverflow descripton_exposure = TextOverflow.fade;
 
   //Variabile per controllare la forma del botton con cui nascondere la descrizione
   IconData botton_description = Icons.keyboard_arrow_down_outlined;
@@ -80,6 +81,26 @@ class CoverInfoState extends State<CoverInfo> {
         ));
   }
 
+  Widget _buildBottonForList() {
+    if (User.current!.hasAnimeInList(widget.anime as Anime)) {
+      return SizedBox(
+        height: 45.0,
+        child: ElevatedButton(
+          onPressed: () => User.current!.removeFromList(widget.anime!),
+          child: const Text("Remove From My List"),
+        ),
+      );
+    } else {
+      return SizedBox(
+        height: 45.0,
+        child: ElevatedButton(
+          onPressed: () => User.current!.addToPlanning(widget.anime!),
+          child: const Text("Add To My List"),
+        ),
+      );
+    }
+  }
+
   Widget _buildTitleBlock(context) {
     // prepare data to output
     String formattedGenres = "";
@@ -115,13 +136,7 @@ class CoverInfoState extends State<CoverInfo> {
                     fontWeight: FontWeight.bold),
               ),
             ),
-          SizedBox(
-            height: 45.0,
-            child: ElevatedButton(
-              onPressed: () => User.current!.addToPlanning(widget.anime!),
-              child: const Text("Add To My List"),
-            ),
-          ),
+          _buildBottonForList(),
         ],
       ),
     );
