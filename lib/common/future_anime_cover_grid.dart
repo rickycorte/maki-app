@@ -3,6 +3,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:maki/models/anime.dart';
+import 'package:skeleton_animation/skeleton_animation.dart';
 
 import 'anime_cover_grid.dart';
 
@@ -37,6 +38,14 @@ class _FutureAnimeCoverGridState extends State<FutureAnimeCoverGrid> {
     }
   }
 
+  List<Widget> _repeatWiget(Widget widget, int times){
+    List<Widget> res = [];
+    for(int i = 0; i < times; i++){
+      res.add(widget);
+    }
+    return res;
+  }
+
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<List<Anime>>(
@@ -59,9 +68,19 @@ class _FutureAnimeCoverGridState extends State<FutureAnimeCoverGrid> {
                 AnimeCoverGrid(displayData: snapshot.data ?? [])
             );
           } else {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
+            return GridView.count(
+                  crossAxisCount: widget.elementsPerRow,
+                  childAspectRatio: 1/1.5,
+                  children: _repeatWiget(
+                    Padding(
+                        padding: const EdgeInsets.all(2),
+                        child: ClipRRect(
+                            borderRadius: const BorderRadius.all(Radius.circular(25)),
+                            child: Skeleton()
+                        )
+                    )
+                , 12),
+              );
           }
         });
   }
