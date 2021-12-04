@@ -1,11 +1,17 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:maki/common/custom_appbar.dart';
+import 'package:maki/details_page/cover_side_info.dart';
+import 'package:maki/details_page/elevated_rounded.dart';
+import 'package:maki/details_page/footer_info.dart';
 import 'package:maki/details_page/shelf.dart';
+import 'package:maki/details_page/text_shelf.dart';
 import 'package:maki/details_page/youtube_embedded.dart';
 import 'package:maki/models/anime_character.dart';
 import 'package:maki/models/anime_details.dart';
 import 'package:maki/models/anime_relation.dart';
-import 'cover_info.dart';
+import 'package:skeleton_animation/skeleton_animation.dart';
+import 'anime_base_info.dart';
 
 // use a steteful page because we may load anime data later than the actual page so a refresh may be needed
 class AnimeDetailsPage extends StatefulWidget {
@@ -37,18 +43,52 @@ class _AnimeDetailsPageState extends State<AnimeDetailsPage> {
                 )));
   }
 
+  
   Widget _loadedPageLayout() {
     const elementPadding = 20.0;
 
+    var cover = ElevatedRounded(
+        child: ClipRRect(
+          borderRadius: const BorderRadius.all( Radius.circular(25)),
+          child: CachedNetworkImage(
+            imageUrl: widget.animeData!.coverUrl,
+            placeholder: (ctx, prog) => Skeleton(height: 250),
+          ),
+        )
+    );
+
     List<Widget> pageElements = [
-      CoverInfo(anime: widget.animeData as AnimeDetails)
+
+      // cover + side info
+      IntrinsicHeight(
+        child: Row (
+          children: [
+            Expanded(child: cover),
+            const SizedBox(width: elementPadding,),
+            Expanded(child: CoverSideInfo(anime: widget.animeData!))
+          ]
+        )
+      ),
+
+      const SizedBox(height: elementPadding),
+
+      // title box
+      ElevatedRounded(child: Padding(
+        padding: const EdgeInsets.only(bottom: 12),
+        child: AnimeBaseInfo(anime: widget.animeData)
+        )
+      ),
+
     ]; // top info are guaranteed to be present
 
+    // plance embed if available
     if (widget.animeData?.trailerUrl != null) {
       pageElements.add(const SizedBox(height: elementPadding));
-      pageElements.add(ClipRRect(
-          borderRadius: BorderRadius.circular(10.0),
-          child: YoutubeEmbedded(url: widget.animeData?.trailerUrl ?? "")));
+      pageElements.add(ElevatedRounded(
+        child: ClipRRect(
+            borderRadius: BorderRadius.circular(10.0),
+            child: YoutubeEmbedded(url: widget.animeData?.trailerUrl ?? "")),
+      ));
     }
 
     if (widget.animeData?.relations != null &&
@@ -56,10 +96,14 @@ class _AnimeDetailsPageState extends State<AnimeDetailsPage> {
       var relations = widget.animeData?.relations as List<AnimeRelation>;
 
       pageElements.add(const SizedBox(height: elementPadding));
-      pageElements.add(Shelf(
-          items: relations,
-          title: "Relations",
-          onItemPressed: _onRelatedAnimePressed));
+      pageElements.add(ElevatedRounded(child: Padding(
+        padding: const EdgeInsets.only(bottom: 16, left: 8, right:8, top: 16),
+        child: Shelf(
+            items: relations,
+            title: "Relations",
+            onItemPressed: _onRelatedAnimePressed),
+      ))
+      );
     }
 
     if (widget.animeData?.characters != null &&
@@ -67,27 +111,14 @@ class _AnimeDetailsPageState extends State<AnimeDetailsPage> {
       var characters = widget.animeData?.characters as List<AnimeCharacter>;
 
       pageElements.add(const SizedBox(height: elementPadding));
-      pageElements.add(Shelf(items: characters, title: "Characters"));
+      pageElements.add(ElevatedRounded(child: Padding(
+          padding: const EdgeInsets.only(bottom: 16, left: 8, right:8, top: 16),
+          child: Shelf(items: characters, title: "Characters")))
+      );
     }
 
-    if (widget.animeData?.altTitle != null) {
-      pageElements.add(const SizedBox(height: elementPadding));
-      pageElements
-          .add(Text("Alternative Title\n${widget.animeData?.altTitle}"));
-    }
-
-    if (widget.animeData?.studio != null &&
-        widget.animeData?.studio != "Unknown Studio") {
-      pageElements.add(const SizedBox(height: elementPadding));
-      pageElements.add(Text("Studio\n${widget.animeData?.studio}"));
-    }
-
-    if (widget.animeData?.airStartDate != null &&
-        widget.animeData?.airFinalDate != null) {
-      pageElements.add(const SizedBox(height: elementPadding));
-      pageElements.add(Text(
-          "Air Period\nFrom ${widget.animeData?.airStartDate} to ${widget.animeData?.airFinalDate}"));
-    }
+    pageElements.add(const SizedBox(height: elementPadding));
+    pageElements.add(FooterInfo(anime: widget.animeData!));
 
     return ListView(
       padding: const EdgeInsets.all(10.0),

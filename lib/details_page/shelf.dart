@@ -60,7 +60,10 @@ class Shelf extends StatelessWidget {
 
     return Column (
       children: [
-        if(title != "") Text(title, style: Theme.of(context).textTheme.headline6,),
+        if(title != "") Padding(
+          padding: const EdgeInsets.only(bottom: 16.0),
+          child: Text(title, style: Theme.of(context).textTheme.headline6,),
+        ),
         GridView.count(
           shrinkWrap: true,
           mainAxisSpacing: 10,

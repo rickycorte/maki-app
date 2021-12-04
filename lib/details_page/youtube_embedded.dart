@@ -1,5 +1,7 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_tabs/flutter_custom_tabs.dart';
+import 'package:skeleton_animation/skeleton_animation.dart';
 
 
 class YoutubeEmbedded extends StatefulWidget {
@@ -64,9 +66,10 @@ class _videoPlayerState extends State<YoutubeEmbedded> {
       onTap: () => { _launchVideo(context) },
       child: Stack(
         children: [
-         Image.network(
-            "$thumbLink/hqdefault.jpg",
+          CachedNetworkImage(
+            imageUrl: "$thumbLink/hqdefault.jpg",
             fit: BoxFit.fitWidth,
+            placeholder: (ctx, prog) => Skeleton(height: 250),
           ),
           Positioned.fill(
             child: Container(
