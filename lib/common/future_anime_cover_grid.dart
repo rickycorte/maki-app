@@ -73,7 +73,7 @@ class _FutureAnimeCoverGridState extends State<FutureAnimeCoverGrid> {
                   childAspectRatio: 1/1.5,
                   children: _repeatWiget(
                     Padding(
-                        padding: const EdgeInsets.all(2),
+                        padding: const EdgeInsets.all(3),
                         child: ClipRRect(
                             borderRadius: const BorderRadius.all(Radius.circular(25)),
                             child: Skeleton()

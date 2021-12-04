@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:maki/details_page/details_page.dart';
 import 'package:maki/models/anime.dart';
 import 'package:maki/common/rounded_cover.dart';
 
@@ -22,17 +21,7 @@ class _AnimeCoverGridState extends State<AnimeCoverGrid> {
   // e tappando sulla card poi viene aperta la pagina dei details
   // TODO: cache images locally
   Widget _makeAnimeCard(Anime anime) {
-    return GestureDetector(
-      onTap: () {
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => AnimeDetailsPage(anilistID: anime.anilistID,))
-        );
-      },
-
-      child: RoundedCover(url: anime.coverUrl, title: anime.title,),
-    );
+    return RoundedCover(url: anime.coverUrl, title: anime.title, anilistID: anime.anilistID);
   }
 
   @override
