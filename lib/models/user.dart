@@ -19,6 +19,7 @@ query (\$userId: Int, \$userName: String, \$type: MediaType) {
     lists {
       name
       entries {
+        id
         ...mediaListEntry
       }
     }
@@ -144,6 +145,8 @@ class User {
     // refetch list to update
     getAnimeList(forceUpdate: true);
 
+    anime.entryID = res["data"]["SaveMediaListEntry"]["id"];
+
     // send callback
     onAnimeListUpdate.call();
 
@@ -155,11 +158,13 @@ class User {
   Future<bool> removeFromList(Anime anime) async {
     var res = await _authenticatedAnilistRequest(
         token, _query_remove_anime_from_list,
-        variables: jsonEncode({"mediaId": anime.anilistID}));
+        variables: jsonEncode({"mediaId": anime.entryID}));
 
     if (res == null) {
       return Future.value(false);
     }
+
+    anime.entryID = null;
 
     // refetch list to update
     getAnimeList(forceUpdate: true);
@@ -168,25 +173,6 @@ class User {
     onAnimeListUpdate.call();
 
     return Future.value(true);
-  }
-
-  bool _hasAnimeInSublist(List<Anime> sublist, Anime anime) {
-    for (var item in sublist) {
-      if (item.anilistID == anime.anilistID) {
-        return true;
-      }
-    }
-
-    return false;
-  }
-
-  /// check if the user has an anime in its list
-  bool hasAnimeInList(Anime anime) {
-    return _animeList != null &&
-        (_hasAnimeInSublist(_animeList!.watching, anime) ||
-            _hasAnimeInSublist(_animeList!.completed, anime) ||
-            _hasAnimeInSublist(_animeList!.planning, anime) ||
-            _hasAnimeInSublist(_animeList!.dropped, anime));
   }
 
   //***********************************************************************************
@@ -290,7 +276,7 @@ class User {
     if (response.statusCode == 200) {
       return jsonDecode(response.body);
     } else {
-      debugPrint(response.toString());
+      debugPrint(response.statusCode.toString()+ ": "+ response.body);
       return null;
     }
   }

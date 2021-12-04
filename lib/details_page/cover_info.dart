@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:maki/models/anime.dart';
 import 'package:maki/models/anime_details.dart';
 import 'package:maki/models/user.dart';
 
@@ -81,25 +80,23 @@ class CoverInfoState extends State<CoverInfo> {
         ));
   }
 
-  Widget _buildBottonForList() {
-    if (User.current!.hasAnimeInList(widget.anime as Anime)) {
-      return SizedBox(
-        height: 45.0,
-        child: ElevatedButton(
-          onPressed: () => User.current!.removeFromList(widget.anime!),
-          child: const Text("Remove From My List"),
-        ),
-      );
+
+  void _onAddItemToListButtonPress() async {
+
+    // msg be generated before the add/remove methond changes the anime state
+    String msg = widget.anime!.isInUserList() ? "Removed ${widget.anime!.title}" : "Added ${widget.anime!.title}";
+
+    if(widget.anime!.isInUserList()) {
+      await User.current!.removeFromList(widget.anime!);
     } else {
-      return SizedBox(
-        height: 45.0,
-        child: ElevatedButton(
-          onPressed: () => User.current!.addToPlanning(widget.anime!),
-          child: const Text("Add To My List"),
-        ),
-      );
+      await User.current!.addToPlanning(widget.anime!);
     }
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      content: Text(msg),
+    ));
+    setState(() {});
   }
+
 
   Widget _buildTitleBlock(context) {
     // prepare data to output
@@ -127,7 +124,7 @@ class CoverInfoState extends State<CoverInfo> {
           ),
           if (formattedGenres.isNotEmpty)
             Padding(
-              padding: EdgeInsets.only(bottom: 15),
+              padding: const EdgeInsets.only(bottom: 15),
               child: Text(
                 formattedGenres,
                 textAlign: TextAlign.center,
@@ -136,7 +133,13 @@ class CoverInfoState extends State<CoverInfo> {
                     fontWeight: FontWeight.bold),
               ),
             ),
-          _buildBottonForList(),
+            SizedBox(
+              height: 45,
+              child: ElevatedButton (
+                onPressed: _onAddItemToListButtonPress,
+                child: Text(widget.anime!.isInUserList() ? "Remove From My List" :  "Add To My List"),
+              ),
+            ),
         ],
       ),
     );

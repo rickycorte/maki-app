@@ -35,6 +35,8 @@ class Anime {
   final int? year;
   final String? format; // eg: TV
 
+  int? entryID; // anilist API related
+
   Anime({
     required this.anilistID,
     required this.title,
@@ -43,8 +45,13 @@ class Anime {
     this.malID,
     this.year,
     this.format,
+    this.entryID,
   });
 
+
+  bool isInUserList() {
+    return entryID != null;
+  }
 
   factory Anime.fromJson(Map<String, dynamic> json) {
     return Anime(

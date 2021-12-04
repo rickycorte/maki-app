@@ -33,7 +33,8 @@ class AnimeList {
           var anime = Anime(
               anilistID: entry["mediaId"],
               title: entry["media"]["title"]["userPreferred"],
-              coverUrl: entry["media"]["coverImage"]["large"]
+              coverUrl: entry["media"]["coverImage"]["large"],
+              entryID: entry["id"]
           );
 
           //skip adult

@@ -35,9 +35,22 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.red,
         primaryColor: Colors.red,
+
       ),
       home: LoginPage(),
     );
   }
 }
 
+/*
+        elevatedButtonTheme: ElevatedButtonThemeData (
+            style: ButtonStyle (
+              shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                  RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30),
+                    side: BorderSide(color: Colors.red)
+                  )
+              )
+            )
+        ),
+ */
