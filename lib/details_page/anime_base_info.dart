@@ -26,17 +26,41 @@ class AnimeBaseInfoState extends State<AnimeBaseInfo> {
   void _onAddItemToListButtonPress() async {
 
     // msg be generated before the add/remove methond changes the anime state
-    String msg = widget.anime!.isInUserList() ? "Removed ${widget.anime!.title}" : "Added ${widget.anime!.title}";
+    String msg = widget.anime!.isInUserList() ? "Removed ${widget.anime!.title} from your list" : "Added ${widget.anime!.title} to your list";
 
     if(widget.anime!.isInUserList()) {
-      await User.current!.removeFromList(widget.anime!);
+      // show dialog to ask confirmation
+      await showDialog(
+          context: context,
+          builder: (ctx) => AlertDialog(
+            content: Text("Are you sure you want to remove `${widget.anime!.title}` from your list?"),
+            actions: [
+              TextButton(onPressed: () { Navigator.of(context).pop(); },
+                child: const Text("Cancel"),
+              ),
+              TextButton(onPressed: () async {
+                  // remove item
+                  await User.current!.removeFromList(widget.anime!);
+                  //dismiss dialog
+                  Navigator.of(context).pop();
+                  // show confirmation as a snackbar
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(msg),));
+                  // update page state
+                  setState(() {});
+                  },
+                child: const Text("Proceed"),
+              ),
+            ],
+          ),
+      );
+
+
     } else {
       await User.current!.addToPlanning(widget.anime!);
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(msg),));
+      setState(() {});
     }
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      content: Text(msg),
-    ));
-    setState(() {});
+
   }
 
 
