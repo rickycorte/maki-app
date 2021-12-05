@@ -85,7 +85,7 @@ class _FutureAnimeCoverGridState extends State<FutureAnimeCoverGrid> {
             return _wrapWithRefreshIfAvailable(
               //TODO: empty page
                 Padding(
-                  padding: const EdgeInsets.all(5.0),
+                  padding: const EdgeInsets.symmetric(horizontal: 5.0),
                   child: AnimeCoverGrid(displayData: snapshot.data ?? []),
                 )
             );
