@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:maki/common/anime_cover_grid.dart';
 import 'package:maki/common/future_anime_cover_grid.dart';
+import 'package:maki/details_page/elevated_rounded.dart';
 import 'package:maki/models/anime.dart';
 import 'package:maki/models/user.dart';
 import 'package:maki/profile_page/option_tab.dart';
@@ -48,48 +49,50 @@ class _HomePageState extends State<HomePage> {
         backgroundColor: Colors.white,
         appBar: PreferredSize(
           preferredSize: const Size.fromHeight(kToolbarHeight),
-          child: Container(
-            color: Colors.red,
-            // ignore: prefer_const_constructors
-            child: Padding(
-              padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top),
-              child: const TabBar(
-                labelColor: Colors.black,
-                unselectedLabelColor: Colors.white,
-                indicator: BoxDecoration(
-                  borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(10),
-                      topRight: Radius.circular(10)),
-                  color: Colors.white,
+          child: Padding(
+            padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top),
+            child: const Padding(
+              padding: EdgeInsets.only(top: 5.0, left: 5, right: 5),
+              child: ElevatedRounded(
+                child: ClipRRect(
+                  borderRadius: BorderRadius.all(Radius.circular(25)), // clip animations
+                  child: TabBar(
+                      labelColor: Colors.white,
+                      unselectedLabelColor: Colors.black,
+                      indicator: BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(25)),
+                        color: Colors.red,
+                      ),
+                      // ignore: prefer_const_literals_to_create_immutables
+                      tabs: [
+                        Tab(
+                          child: Align(
+                            child: Text("Watching",
+                                style: TextStyle(fontSize: 13)),
+                          ),
+                        ),
+                        Tab(
+                          child: Align(
+                            child: Text("Complete",
+                                style: TextStyle(fontSize: 13)),
+                          ),
+                        ),
+                        Tab(
+                          child: Align(
+                            child: Text("Planning",
+                                style: TextStyle(fontSize: 13)),
+                          ),
+                        ),
+                        Tab(
+                          child: Align(
+                            alignment: Alignment.center,
+                            child:
+                            Text("Dropped", style:TextStyle(fontSize: 13)),
+                          ),
+                        ),
+                      ],
+                    ),
                 ),
-                // ignore: prefer_const_literals_to_create_immutables
-                tabs: [
-                  Tab(
-                    child: Align(
-                      child: Text("Watching",
-                          style: TextStyle(fontSize: 13)),
-                    ),
-                  ),
-                  Tab(
-                    child: Align(
-                      child: Text("Completed",
-                          style: TextStyle(fontSize: 13)),
-                    ),
-                  ),
-                  Tab(
-                    child: Align(
-                      child: Text("Planning",
-                          style: TextStyle(fontSize: 13)),
-                    ),
-                  ),
-                  Tab(
-                    child: Align(
-                      alignment: Alignment.center,
-                      child:
-                      Text("Dropped", style:TextStyle(fontSize: 13)),
-                    ),
-                  ),
-                ],
               ),
             ),
           ),
