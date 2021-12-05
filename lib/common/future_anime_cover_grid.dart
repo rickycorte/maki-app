@@ -84,7 +84,10 @@ class _FutureAnimeCoverGridState extends State<FutureAnimeCoverGrid> {
           } else if (snapshot.hasData) {
             return _wrapWithRefreshIfAvailable(
               //TODO: empty page
-                AnimeCoverGrid(displayData: snapshot.data ?? [])
+                Padding(
+                  padding: const EdgeInsets.all(5.0),
+                  child: AnimeCoverGrid(displayData: snapshot.data ?? []),
+                )
             );
           } else {
             return GridView.count(
@@ -92,7 +95,7 @@ class _FutureAnimeCoverGridState extends State<FutureAnimeCoverGrid> {
                   childAspectRatio: 1/1.5,
                   children: _repeatWiget(
                     Padding(
-                        padding: const EdgeInsets.all(5),
+                        padding: const EdgeInsets.all(10),
                         child: ClipRRect(
                             borderRadius: const BorderRadius.all(Radius.circular(25)),
                             child: Skeleton()
