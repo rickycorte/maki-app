@@ -33,60 +33,64 @@ class _CustomRoundedCoverState extends State<RoundedCover> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(3),
-      child: ClipRRect(
-        clipBehavior: Clip.antiAlias,
+      padding: const EdgeInsets.all(5),
+      child: Material(
+        elevation: 15,
         borderRadius: const BorderRadius.all(Radius.circular(25)),
-        child: Stack(
-          alignment: Alignment.topCenter,
-          children: [
-            Positioned(
-              top:0,
-              bottom: 0,
-              right: 0,
-              left:0,
-              child: CachedNetworkImage(
-                imageUrl: widget.url,
-                fit: BoxFit.fill,
-                placeholder: (ctz, progress) => Skeleton(),
-              ),
-            ),
-            Positioned(
+        child: ClipRRect(
+          clipBehavior: Clip.antiAlias,
+          borderRadius: const BorderRadius.all(Radius.circular(25)),
+          child: Stack(
+            alignment: Alignment.topCenter,
+            children: [
+              Positioned(
+                top:0,
                 bottom: 0,
-                left:0,
                 right: 0,
-                child: Container(
-                  alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                          colors: [Colors.black.withOpacity(0.4), Colors.black.withOpacity(0)],
-                          begin: const Alignment(0,0),
-                          end: const Alignment(0,-1),
+                left:0,
+                child: CachedNetworkImage(
+                  imageUrl: widget.url,
+                  fit: BoxFit.fill,
+                  placeholder: (ctz, progress) => Skeleton(),
+                ),
+              ),
+              Positioned(
+                  bottom: 0,
+                  left:0,
+                  right: 0,
+                  child: Container(
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                            colors: [Colors.black.withOpacity(0.4), Colors.black.withOpacity(0)],
+                            begin: const Alignment(0,0),
+                            end: const Alignment(0,-1),
+                        )
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.only(top:15.0, bottom: 10.0),
+                      child: Text(
+                        widget.title,
+                        textAlign: TextAlign.center,
+                        style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,),
+                    ),
+                )
+              ),
+              // tap moved here because the stack would cover the tap animations
+              Positioned.fill(
+                  child: Material(
+                      color: Colors.transparent,
+                      child: InkWell(
+                        onTap: _openDetailsPage,
+                        splashColor: Colors.red.shade400.withOpacity(0.4),
+
                       )
                   ),
-                  child: Padding(
-                    padding: const EdgeInsets.only(top:15.0, bottom: 10.0),
-                    child: Text(
-                      widget.title,
-                      textAlign: TextAlign.center,
-                      style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,),
-                  ),
-              )
-            ),
-            // tap moved here because the stack would cover the tap animations
-            Positioned.fill(
-                child: Material(
-                    color: Colors.transparent,
-                    child: InkWell(
-                      onTap: _openDetailsPage,
-                      splashColor: Colors.red.shade400.withOpacity(0.4),
-
-                    )
-                ),
-            ),
-          ],
+              ),
+            ],
+          ),
         ),
       ),
     );
