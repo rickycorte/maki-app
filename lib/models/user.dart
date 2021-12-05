@@ -175,6 +175,33 @@ class User {
     return Future.value(true);
   }
 
+
+  bool _hasAnimeInSublist(List<Anime> sublist, Anime anime) {
+    for (var item in sublist) {
+      if (item.anilistID == anime.anilistID) {
+        anime.entryID = item.entryID;
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  /// check if the user has an anime in its list
+  bool hasAnimeInList(Anime anime) {
+    return _animeList != null &&
+        (_hasAnimeInSublist(_animeList!.watching, anime) ||
+            _hasAnimeInSublist(_animeList!.completed, anime) ||
+            _hasAnimeInSublist(_animeList!.planning, anime) ||
+            _hasAnimeInSublist(_animeList!.dropped, anime));
+  }
+
+  /// update the entry value for the anime if fresent in the list
+  /// otherwise leave the previous value
+  void updateAnimeEntryList(Anime a) {
+    hasAnimeInList(a);
+  }
+
   //***********************************************************************************
 
   static const FlutterSecureStorage _storage = FlutterSecureStorage();

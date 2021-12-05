@@ -10,6 +10,7 @@ import 'package:maki/details_page/youtube_embedded.dart';
 import 'package:maki/models/anime_character.dart';
 import 'package:maki/models/anime_details.dart';
 import 'package:maki/models/anime_relation.dart';
+import 'package:maki/models/user.dart';
 import 'package:skeleton_animation/skeleton_animation.dart';
 import 'anime_base_info.dart';
 
@@ -26,6 +27,7 @@ class AnimeDetailsPage extends StatefulWidget {
 
   _onDetailsFetched(AnimeDetails anime) {
     animeData = anime;
+    User.current!.updateAnimeEntryList(anime); 
   }
 
   @override
