@@ -98,7 +98,7 @@ class _AnimeDetailsPageState extends State<AnimeDetailsPage> {
       pageElements.add(const SizedBox(height: elementPadding));
       pageElements.add(ElevatedRounded(
         child: ClipRRect(
-            borderRadius: BorderRadius.circular(10.0),
+            borderRadius: BorderRadius.circular(25.0),
             child: YoutubeEmbedded(url: widget.animeData?.trailerUrl ?? "")),
       ));
     }
