@@ -51,6 +51,9 @@ class _videoPlayerState extends State<YoutubeEmbedded> {
     }
   }
 
+  double _getVideoAspectRatio(BuildContext context) {
+     return  MediaQuery.of(context).size.width * MediaQuery.of(context).devicePixelRatio > 1100 ? 9/25 : 9/17;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -66,10 +69,14 @@ class _videoPlayerState extends State<YoutubeEmbedded> {
       onTap: () => { _launchVideo(context) },
       child: Stack(
         children: [
-          CachedNetworkImage(
-            imageUrl: "$thumbLink/hqdefault.jpg",
-            fit: BoxFit.fitWidth,
-            placeholder: (ctx, prog) => Skeleton(height: 250),
+          Container(
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.width * _getVideoAspectRatio(context),
+            child: CachedNetworkImage(
+              imageUrl: "$thumbLink/hqdefault.jpg",
+              fit: BoxFit.fitWidth,
+              placeholder: (ctx, prog) => Skeleton(height: 250),
+            ),
           ),
           Positioned.fill(
             child: Container(
