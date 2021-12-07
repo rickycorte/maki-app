@@ -54,7 +54,7 @@ class _OptionsTabPageState extends State<OptionsTabPage> {
           child: Text(
             widget.nome,
             style:
-                const TextStyle(color: Colors.black, height: 2, fontSize: 35),
+                const TextStyle(height: 2, fontSize: 35),
           ),
         ),
         Text("Logged in with Anilist",
@@ -95,13 +95,13 @@ class _OptionsTabPageState extends State<OptionsTabPage> {
               ),
               value: test,
               onChanged: (bool current_value) {
-                if (_themeChanger.getTheme() == ThemeData.light()) {
-                  _themeChanger.setTheme(ThemeData.dark());
+                if (_themeChanger.getTheme() == ThemeChanger.lightTheme) {
+                  _themeChanger.setTheme(ThemeChanger.darkTheme);
                   _storage.deleteAll();
                   _storage.write(
                       key: _access_value_key, value: current_value.toString());
                 } else {
-                  _themeChanger.setTheme(ThemeData.light());
+                  _themeChanger.setTheme(ThemeChanger.lightTheme);
                   _storage.deleteAll();
                   _storage.write(
                       key: _access_value_key, value: current_value.toString());

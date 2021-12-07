@@ -63,20 +63,19 @@ class _HomePageState extends State<HomePage> {
     return DefaultTabController(
       length: 4,
       child: Scaffold(
-        backgroundColor: Colors.white,
         appBar: PreferredSize(
           preferredSize: const Size.fromHeight(kToolbarHeight),
           child: Padding(
             padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top),
-            child: const Padding(
-              padding: EdgeInsets.only(top: 5.0, left: 5, right: 5),
+            child: Padding(
+              padding: const EdgeInsets.only(top: 5.0, left: 5, right: 5),
               child: ElevatedRounded(
                 child: ClipRRect(
-                  borderRadius: BorderRadius.all(Radius.circular(25)), // clip animations
+                  borderRadius: const BorderRadius.all(Radius.circular(25)), // clip animations
                   child: TabBar(
                       labelColor: Colors.white,
-                      unselectedLabelColor: Colors.black,
-                      indicator: BoxDecoration(
+                      unselectedLabelColor: Theme.of(context).textTheme.bodyText1!.color ?? Colors.black,
+                      indicator: const BoxDecoration(
                         borderRadius: BorderRadius.all(Radius.circular(25)),
                         color: Colors.red,
                       ),
