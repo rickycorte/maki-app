@@ -101,7 +101,7 @@ class _OptionsTabPageState extends State<OptionsTabPage> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-            padding: const EdgeInsets.only(right: 10, left: 10, top: kToolbarHeight + 15 ),
+            padding: EdgeInsets.only(right: 10, left: 10, top: MediaQuery.of(context).padding.top + 5 ),
             child: Column (
               children: [
                 _profileBaseInfo(context),
