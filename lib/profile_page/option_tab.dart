@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:maki/details_page/elevated_rounded.dart';
 import 'package:maki/login_page/login_page.dart';
 import 'package:maki/models/user.dart';
+import 'package:maki/main.dart';
+import 'package:maki/profile_page/theme_changer.dart';
+import 'package:provider/provider.dart';
+
+const _access_value_key = "access_value";
 
 class OptionsTabPage extends StatefulWidget {
   String nome;
@@ -40,38 +46,41 @@ class _OptionsTabPageState extends State<OptionsTabPage> {
 
   Widget _profileBaseInfo(context) {
     return ElevatedRounded(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 16.0),
-        child: Column(
-            children: [
-              imageProfile(widget.profilePicture),
-              Center(
-                child: Text(
-                widget.nome,
-                style:
+        child: Padding(
+      padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 16.0),
+      child: Column(children: [
+        imageProfile(widget.profilePicture),
+        Center(
+          child: Text(
+            widget.nome,
+            style:
                 const TextStyle(color: Colors.black, height: 2, fontSize: 35),
-                ),
-              ),
-              Text("Logged in with Anilist", style: Theme.of(context).textTheme.subtitle2),
-              const SizedBox(height:20),
-              SizedBox(
-                height: 60.0,
-                width: MediaQuery.of(context).size.width,
-                child: ElevatedButton(
-                  onPressed: () {
-                    User.logout();
-                    LoginPage.refreshLogin(context);
-                  },
-                  child: const Text("Logout"),
-                ),
-              ),
-          ]
+          ),
         ),
-      )
-    );
+        Text("Logged in with Anilist",
+            style: Theme.of(context).textTheme.subtitle2),
+        const SizedBox(height: 20),
+        SizedBox(
+          height: 60.0,
+          width: MediaQuery.of(context).size.width,
+          child: ElevatedButton(
+            onPressed: () {
+              User.logout();
+              LoginPage.refreshLogin(context);
+            },
+            child: const Text("Logout"),
+          ),
+        ),
+      ]),
+    ));
   }
 
+  static const FlutterSecureStorage _storage = FlutterSecureStorage();
+
   Widget _settings(context) {
+    ThemeChanger _themeChanger = Provider.of<ThemeChanger>(context);
+    var valore = _storage.read(key: _access_value_key);
+    bool test = valore.toString() == 'true';
     return ElevatedRounded(
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 16.0),
@@ -80,26 +89,35 @@ class _OptionsTabPageState extends State<OptionsTabPage> {
           children: [
             Text("Settings", style: Theme.of(context).textTheme.headline5),
             SwitchListTile(
-                title: Text(
-                  "Always use Dark Theme",
-                  style: Theme.of(context).textTheme.bodyText2,
-                ),
-                value: false,
-                onChanged: (bool value) {
-                  setState(
-                        () {},
-                  );
-                },
+              title: Text(
+                "Always use Dark Theme",
+                style: Theme.of(context).textTheme.bodyText2,
               ),
+              value: test,
+              onChanged: (bool current_value) {
+                if (_themeChanger.getTheme() == ThemeData.light()) {
+                  _themeChanger.setTheme(ThemeData.dark());
+                  _storage.deleteAll();
+                  _storage.write(
+                      key: _access_value_key, value: current_value.toString());
+                } else {
+                  _themeChanger.setTheme(ThemeData.light());
+                  _storage.deleteAll();
+                  _storage.write(
+                      key: _access_value_key, value: current_value.toString());
+                }
+              },
+            ),
           ],
         ),
       ),
     );
   }
 
-
   @override
   Widget build(BuildContext context) {
+    bool valore = true;
+    _storage.write(key: _access_value_key, value: valore.toString());
     return Padding(
             padding: EdgeInsets.only(top: 0),
             child: ListView (
