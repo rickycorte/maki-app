@@ -101,12 +101,20 @@ class _OptionsTabPageState extends State<OptionsTabPage> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-            padding: EdgeInsets.only(right: 10, left: 10, top: MediaQuery.of(context).padding.top + 5 ),
-            child: Column (
+            padding: EdgeInsets.only(top: 0),
+            child: ListView (
               children: [
-                _profileBaseInfo(context),
+                const SizedBox(height: 5),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                  child: _profileBaseInfo(context),
+                ),
                 const SizedBox(height: 20),
-                _settings(context),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                  child: _settings(context),
+                ),
+                const SizedBox(height: 5,)
               ]
             ),
         );
