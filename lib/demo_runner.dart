@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:maki/details_page/details_page.dart';
 import 'package:maki/models/anime.dart';
 import 'login_page/login_page.dart';
@@ -29,6 +30,8 @@ class RunnerBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    //variabile per salvarsi la larghezza dello schermo
+    final screenwidth = MediaQuery.of(context).size.width;
     return Scaffold(
         body: ListView(
       children: [
@@ -45,12 +48,28 @@ class RunnerBody extends StatelessWidget {
         ElevatedButton(
           child: const Text("Open fetched details!"),
           onPressed: () => {
-            Navigator.push(
-                context,
-                MaterialPageRoute(
+            if (screenwidth < 1600)
+              {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
                     builder: (context) => AnimeDetailsPage(
-                          anilistID: 21202,
-                        )))
+                      anilistID: 21202,
+                    ),
+                  ),
+                ),
+              }
+            else
+              {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => AnimeDetailsPage(
+                      anilistID: 21202,
+                    ),
+                  ),
+                ),
+              }
           },
         ),
         ElevatedButton(
@@ -71,15 +90,11 @@ class RunnerBody extends StatelessWidget {
                 context, MaterialPageRoute(builder: (context) => const MyApp()))
           },
         ),
-
         ElevatedButton(
           child: const Text("Login"),
           onPressed: () => {
             Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => LoginPage())
-            )
+                context, MaterialPageRoute(builder: (context) => LoginPage()))
           },
         ),
       ],

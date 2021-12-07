@@ -40,6 +40,7 @@ dependencies:
   flutter_secure_storage: ^5.0.2
   cached_network_image: ^3.2.0
   skeleton_animation: ^0.1.4
+  provider:
 
 dev_dependencies:
   flutter_test:
