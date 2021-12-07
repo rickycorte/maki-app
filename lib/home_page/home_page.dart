@@ -36,8 +36,26 @@ class _HomePageState extends State<HomePage> {
     setState(() {});
   }
 
+  int getResponsiveGridItemCount() {
+    var w = MediaQuery.of(context).size.width * MediaQuery.of(context).devicePixelRatio;
+
+    if(w > 960 && w < 1980) {
+      return 4;
+    }
+    if(w > 1980) {
+      return 6;
+    }
+
+    return 2;
+  }
+
   Widget _futureRecommendationGrid(username) {
-    _cachedRecommendationWidget ??= FutureAnimeCoverGrid(futureList: fetchRecommendations(username), onRefreshCallback: refreshGridBar,);
+    debugPrint(MediaQuery.of(context).size.width.toString());
+    _cachedRecommendationWidget ??= FutureAnimeCoverGrid(
+      futureList: fetchRecommendations(username),
+      onRefreshCallback: refreshGridBar,
+      elementsPerRow: getResponsiveGridItemCount(),
+    );
 
     return _cachedRecommendationWidget as Widget;
   }
@@ -99,10 +117,22 @@ class _HomePageState extends State<HomePage> {
         ),
         body: TabBarView(
           children: [
-            FutureAnimeCoverGrid(futureList: User.current!.getAnimeSublist(AnimeSublist.watching)),
-            FutureAnimeCoverGrid(futureList: User.current!.getAnimeSublist(AnimeSublist.completed)),
-            FutureAnimeCoverGrid(futureList: User.current!.getAnimeSublist(AnimeSublist.planning)),
-            FutureAnimeCoverGrid(futureList: User.current!.getAnimeSublist(AnimeSublist.dropped)),
+            FutureAnimeCoverGrid(
+              futureList: User.current!.getAnimeSublist(AnimeSublist.watching),
+              elementsPerRow: getResponsiveGridItemCount(),
+            ),
+            FutureAnimeCoverGrid(
+              futureList: User.current!.getAnimeSublist(AnimeSublist.completed),
+              elementsPerRow: getResponsiveGridItemCount(),
+            ),
+            FutureAnimeCoverGrid(
+              futureList: User.current!.getAnimeSublist(AnimeSublist.planning),
+              elementsPerRow: getResponsiveGridItemCount(),
+            ),
+            FutureAnimeCoverGrid(
+              futureList: User.current!.getAnimeSublist(AnimeSublist.dropped),
+              elementsPerRow: getResponsiveGridItemCount(),
+            ),
           ],
         ),
       ),

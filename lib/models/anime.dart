@@ -6,7 +6,7 @@ import 'package:http/http.dart' as http;
 
 Future<List<Anime>> fetchRecommendations(String username) async {
   final response = await http
-      .get(Uri.parse('https://api.makichan.xyz/anime/anilist/$username'));
+      .get(Uri.parse('https://api.makichan.xyz/anime/anilist/$username?k=12'));
 
   if (response.statusCode == 200) {
     // If the server did return a 200 OK response,
