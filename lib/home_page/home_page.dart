@@ -16,7 +16,9 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int _selectedPageIndex = 0;
-  Widget? _cachedRecommendationWidget;
+
+  Future<List<Anime>>? _cachedRecommendations;
+
   late Color colorTextTabBar = Colors.white;
 
 
@@ -26,7 +28,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   Future<bool> refreshGridBar() async {
-    _cachedRecommendationWidget = null;
+    _cachedRecommendations = null;
     setState(() {});
 
     return await Future.value(true);
@@ -45,14 +47,16 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget _futureRecommendationGrid(username) {
-    debugPrint(MediaQuery.of(context).size.width.toString());
-    _cachedRecommendationWidget ??= FutureAnimeCoverGrid(
-      futureList: fetchRecommendations(username),
+
+
+    _cachedRecommendations ??= fetchRecommendations(username);
+
+     return FutureAnimeCoverGrid(
+      futureList: _cachedRecommendations as Future<List<Anime>>,
       onRefreshCallback: refreshGridBar,
       elementsPerRow: getResponsiveGridItemCount(),
     );
 
-    return _cachedRecommendationWidget as Widget;
   }
 
   Widget _userList(BuildContext context) {
