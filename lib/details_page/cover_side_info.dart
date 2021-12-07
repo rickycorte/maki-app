@@ -8,7 +8,9 @@ import 'elevated_rounded.dart';
 class CoverSideInfo extends StatelessWidget {
   final AnimeDetails anime;
 
-  const CoverSideInfo({Key? key, required this.anime}) : super(key: key);
+  final bool horizontal;
+
+  const CoverSideInfo({Key? key, required this.anime, this.horizontal = false}) : super(key: key);
 
   List<String> _parseAnimeInfo(){
     List<String> values = [];
@@ -43,7 +45,7 @@ class CoverSideInfo extends StatelessWidget {
     return ElevatedRounded(
       child: TextShelf(
         items: _parseAnimeInfo(),
-        direction: TextShelfDirection.vertical,
+        direction: horizontal? TextShelfDirection.horizontal : TextShelfDirection.vertical,
         highlightFirst: true,
       ),
     );

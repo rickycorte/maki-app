@@ -6,7 +6,9 @@ import 'package:maki/models/user.dart';
 class AnimeBaseInfo extends StatefulWidget {
   AnimeDetails? anime;
 
-  AnimeBaseInfo({Key? key, required this.anime}) : super(key: key);
+  final bool expandedDesc;
+
+  AnimeBaseInfo({Key? key, required this.anime, this.expandedDesc = false}) : super(key: key);
 
   @override
   State<AnimeBaseInfo> createState() => AnimeBaseInfoState();
@@ -131,6 +133,7 @@ class AnimeBaseInfoState extends State<AnimeBaseInfo> {
     );
   }
 
+
   @override
   Widget build(BuildContext context) {
     const elementPadding = 20.0;
@@ -139,15 +142,18 @@ class AnimeBaseInfoState extends State<AnimeBaseInfo> {
       children: [
         _buildTitleBlock(context),
         const SizedBox(height: elementPadding),
-        Text(
-          widget.anime!.description
-              .replaceAll("<br>", "\n")
-              .replaceAll(RegExp(r"<\/?b>|<\/?i>"), ""),
-          overflow: descripton_exposure,
-          maxLines: number_of_line,
-          textAlign: TextAlign.center,
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+          child: Text(
+            widget.anime!.description
+                .replaceAll("<br>", "\n")
+                .replaceAll(RegExp(r"<\/?b>|<\/?i>"), ""),
+            overflow: descripton_exposure,
+            maxLines: widget.expandedDesc ? 100 : number_of_line,
+            textAlign: TextAlign.center,
+          ),
         ),
-        Center(
+        !widget.expandedDesc ? Center(
           // ignore: prefer_const_constructors
           child: Padding(
             padding: const EdgeInsets.only(top: 10),
@@ -168,7 +174,7 @@ class AnimeBaseInfoState extends State<AnimeBaseInfo> {
               ),
             ),
           ),
-        ),
+        ) : const SizedBox.shrink(),
       ],
     );
   }

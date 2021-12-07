@@ -66,32 +66,58 @@ class _AnimeDetailsPageState extends State<AnimeDetailsPage> {
         )
     );
 
-    List<Widget> pageElements = [
+    List<Widget> pageElements = [];
 
-      // cover + side info
-      Container(
-        constraints: const BoxConstraints(maxHeight: 400),
-        child: IntrinsicHeight(
-          child: Row (
-            children: [
-              Expanded(child: cover),
-              const SizedBox(width: elementPadding,),
-              Expanded(child: CoverSideInfo(anime: widget.animeData!))
-            ]
-          )
+    if(MediaQuery.of(context).size.width * MediaQuery.of(context).devicePixelRatio < 1100) {
+      // phone vertical layout here
+        // cover + side info
+        pageElements.add (
+            IntrinsicHeight(
+                child: Row (
+                    children: [
+                      Expanded(child: cover),
+                      const SizedBox(width: elementPadding,),
+                      Expanded(child: CoverSideInfo(anime: widget.animeData!))
+                    ]
+                )
+            )
+        );
+
+        pageElements.add(const SizedBox(height: elementPadding));
+
+        // title box
+        pageElements.add(
+            ElevatedRounded(child: Padding(
+                padding: const EdgeInsets.only(bottom: 12),
+                child: AnimeBaseInfo(anime: widget.animeData)
+            )
+            )
+        );
+
+
+    } else {
+      // phone horizontal and tablet layout here
+      pageElements.add(Container(
+        constraints: const BoxConstraints(maxHeight: 400,),
+        child: Row(
+          children: [
+            cover,
+            const SizedBox(width: 20,),
+            Expanded(
+              child: ElevatedRounded(child: ClipRRect(child: AnimeBaseInfo(anime: widget.animeData, expandedDesc: true,))),
+            ),
+          ],
         ),
-      ),
+      ));
 
-      const SizedBox(height: elementPadding),
+      pageElements.add(const SizedBox(height: 20,));
 
-      // title box
-      ElevatedRounded(child: Padding(
-        padding: const EdgeInsets.only(bottom: 12),
-        child: AnimeBaseInfo(anime: widget.animeData)
-        )
-      ),
+      pageElements.add(
+          CoverSideInfo(anime: widget.animeData!, horizontal: true,)
+      );
 
-    ]; // top info are guaranteed to be present
+    }
+
 
     // plance embed if available
     if (widget.animeData?.trailerUrl != null) {
