@@ -73,7 +73,7 @@ class AnimeDetails extends Anime {
     static String _fmtDate(Map<String, dynamic> json) {
 
       if(json == null || json["day"] == null || json["month"] == null || json["year"] == null) {
-        return "Unknown";
+        return "N/A";
       }
 
       return "${json["day"]}/${json["month"]}/${json["year"]}";
@@ -81,7 +81,7 @@ class AnimeDetails extends Anime {
 
     static String _mainStudio(Map<String, dynamic> json) {
       if(json == null || json["edges"] == null || !json["edges"].isNotEmpty) {
-        return "Unknown Studio";
+        return "Unknown";
       }
 
       return json["edges"][0]["node"]["name"]; //TODO: check for main
@@ -97,8 +97,8 @@ class AnimeDetails extends Anime {
           format: json["format"],
           genres: json["genres"].cast<String>(),
           altTitle: json["title"]["romaji"],
-          season: json["season"] ?? "Unknown",
-          airStatus: json["status"] ?? "Unknown",
+          season: json["season"] ?? "SEASON N/A",
+          airStatus: json["status"]?? "STATUS N/A",
           description: json["description"] ?? "",
           episodeCount: json["episodes"],
           episodeMinutes: json["duration"],

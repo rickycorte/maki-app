@@ -24,17 +24,17 @@ class CoverSideInfo extends StatelessWidget {
       values.add(anime.season);
     }
 
-    values.add(anime.airStatus);
+    values.add(anime.airStatus.replaceAll("_", " "));
 
     if(anime.format != null) {
       if (anime.episodeCount != null && anime.episodeMinutes != null) {
-        values.add("${anime.format}\n${anime.episodeCount} episod${(anime.episodeCount! > 1 ? "es" : "e")} of ${anime
+        values.add("${anime.format?.replaceAll("_", " ")}\n${anime.episodeCount} episod${(anime.episodeCount! > 1 ? "es" : "e")} of ${anime
             .episodeMinutes} min");
       } else {
-        values.add(anime.format as String);
+        values.add(anime.format?.replaceAll("_", " ") as String);
       }
     } else {
-      values.add("Unknown format");
+      values.add("FORMAT N/A");
     }
 
     return values;
