@@ -45,6 +45,13 @@ class _AnimeDetailsPageState extends State<AnimeDetailsPage> {
                 )));
   }
 
+  int getResponsiveGridItemCount() {
+    var w = MediaQuery.of(context).size.width * MediaQuery.of(context).devicePixelRatio;
+    if(w > 1100) {
+      return 6;
+    }
+    return 3;
+  }
   
   Widget _loadedPageLayout() {
     const elementPadding = 20.0;
@@ -62,14 +69,17 @@ class _AnimeDetailsPageState extends State<AnimeDetailsPage> {
     List<Widget> pageElements = [
 
       // cover + side info
-      IntrinsicHeight(
-        child: Row (
-          children: [
-            Expanded(child: cover),
-            const SizedBox(width: elementPadding,),
-            Expanded(child: CoverSideInfo(anime: widget.animeData!))
-          ]
-        )
+      Container(
+        constraints: const BoxConstraints(maxHeight: 400),
+        child: IntrinsicHeight(
+          child: Row (
+            children: [
+              Expanded(child: cover),
+              const SizedBox(width: elementPadding,),
+              Expanded(child: CoverSideInfo(anime: widget.animeData!))
+            ]
+          )
+        ),
       ),
 
       const SizedBox(height: elementPadding),
@@ -103,7 +113,9 @@ class _AnimeDetailsPageState extends State<AnimeDetailsPage> {
         child: Shelf(
             items: relations,
             title: "Relations",
-            onItemPressed: _onRelatedAnimePressed),
+            onItemPressed: _onRelatedAnimePressed,
+            itemsPerRow: getResponsiveGridItemCount(),
+        ),
       ))
       );
     }
@@ -115,7 +127,7 @@ class _AnimeDetailsPageState extends State<AnimeDetailsPage> {
       pageElements.add(const SizedBox(height: elementPadding));
       pageElements.add(ElevatedRounded(child: Padding(
           padding: const EdgeInsets.only(bottom: 16, left: 8, right:8, top: 16),
-          child: Shelf(items: characters, title: "Characters")))
+          child: Shelf(items: characters, title: "Characters", itemsPerRow: getResponsiveGridItemCount(),)))
       );
     }
 

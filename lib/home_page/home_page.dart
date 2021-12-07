@@ -38,8 +38,7 @@ class _HomePageState extends State<HomePage> {
 
   int getResponsiveGridItemCount() {
     var w = MediaQuery.of(context).size.width * MediaQuery.of(context).devicePixelRatio;
-
-    if(w > 960) {
+    if(w > 1100) {
       return 4;
     }
     return 2;
