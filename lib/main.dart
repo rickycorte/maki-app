@@ -15,7 +15,7 @@ import 'profile_page/theme_changer.dart';
 import 'package:provider/provider.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -24,8 +24,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<ThemeChanger>(
-      create: (ctx) => ThemeChanger(ThemeChanger.lightTheme),
-      child: new MaterialAppWithTheme(),
+      create: (ctx) => ThemeChanger(),
+      child: const MaterialAppWithTheme(),
     );
   }
 }
@@ -33,12 +33,16 @@ class MyApp extends StatelessWidget {
 class MaterialAppWithTheme extends StatelessWidget {
   const MaterialAppWithTheme({Key? key}) : super(key: key);
 
+
   @override
   Widget build(BuildContext context) {
     final theme = Provider.of<ThemeChanger>(context);
+    debugPrint(theme.mode.toString());
     return MaterialApp(
       home: LoginPage(),
-      theme: theme.getTheme(),
+      theme: ThemeChanger.lightTheme,
+      darkTheme: ThemeChanger.darkTheme,
+      themeMode: theme.mode,
     );
   }
 }
