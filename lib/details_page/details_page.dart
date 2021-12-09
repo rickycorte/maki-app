@@ -27,7 +27,7 @@ class AnimeDetailsPage extends StatefulWidget {
 
   _onDetailsFetched(AnimeDetails anime) {
     animeData = anime;
-    User.current!.updateAnimeEntryList(anime); 
+    User.current!.updateAnimeEntryList(anime);
   }
 
   @override
@@ -46,78 +46,84 @@ class _AnimeDetailsPageState extends State<AnimeDetailsPage> {
   }
 
   int getResponsiveGridItemCount() {
-    var w = MediaQuery.of(context).size.width * MediaQuery.of(context).devicePixelRatio;
-    if(w > 1100) {
+    var w = MediaQuery.of(context).size.width *
+        MediaQuery.of(context).devicePixelRatio;
+    if (w > 1100) {
       return 6;
     }
     return 3;
   }
-  
+
   Widget _loadedPageLayout() {
     const elementPadding = 20.0;
 
     var cover = ElevatedRounded(
         child: ClipRRect(
-          borderRadius: const BorderRadius.all( Radius.circular(25)),
-          child: CachedNetworkImage(
-            imageUrl: widget.animeData!.coverUrl,
-            placeholder: (ctx, prog) => Skeleton(height: 250),
-          ),
-        )
-    );
+      borderRadius: const BorderRadius.all(Radius.circular(25)),
+      child: CachedNetworkImage(
+        imageUrl: widget.animeData!.coverUrl,
+        placeholder: (ctx, prog) => Skeleton(height: 250),
+      ),
+    ));
 
     List<Widget> pageElements = [];
 
-    if(MediaQuery.of(context).size.width * MediaQuery.of(context).devicePixelRatio < 1100) {
+    if (MediaQuery.of(context).size.width *
+            MediaQuery.of(context).devicePixelRatio <
+        1100) {
       // phone vertical layout here
-        // cover + side info
-        pageElements.add (
-            IntrinsicHeight(
-                child: Row (
-                    children: [
-                      Expanded(child: cover),
-                      const SizedBox(width: elementPadding,),
-                      Expanded(child: CoverSideInfo(anime: widget.animeData!))
-                    ]
-                )
-            )
-        );
+      // cover + side info
+      pageElements.add(IntrinsicHeight(
+          child: Row(children: [
+        Expanded(child: cover),
+        const SizedBox(
+          width: elementPadding,
+        ),
+        Expanded(child: CoverSideInfo(anime: widget.animeData!))
+      ])));
 
-        pageElements.add(const SizedBox(height: elementPadding));
+      pageElements.add(const SizedBox(height: elementPadding));
 
-        // title box
-        pageElements.add(
-            ElevatedRounded(child: Padding(
-                padding: const EdgeInsets.only(bottom: 12),
-                child: AnimeBaseInfo(anime: widget.animeData)
-            )
-            )
-        );
-
-
+      // title box
+      pageElements.add(ElevatedRounded(
+          child: Padding(
+              padding: const EdgeInsets.only(bottom: 12),
+              child: AnimeBaseInfo(anime: widget.animeData))));
     } else {
       // phone horizontal and tablet layout here
       pageElements.add(Container(
-        constraints: const BoxConstraints(maxHeight: 400,),
+        constraints: const BoxConstraints(
+          maxHeight: 400,
+        ),
         child: Row(
           children: [
             cover,
-            const SizedBox(width: 20,),
+            const SizedBox(
+              width: 20,
+            ),
             Expanded(
-              child: ElevatedRounded(child: ClipRRect(child: AnimeBaseInfo(anime: widget.animeData, expandedDesc: true,))),
+              child: ElevatedRounded(
+                child: ClipRRect(
+                  child: AnimeBaseInfo(
+                    anime: widget.animeData,
+                    expandedDesc: true,
+                  ),
+                ),
+              ),
             ),
           ],
         ),
       ));
 
-      pageElements.add(const SizedBox(height: 20,));
+      pageElements.add(const SizedBox(
+        height: 20,
+      ));
 
-      pageElements.add(
-          CoverSideInfo(anime: widget.animeData!, horizontal: true,)
-      );
-
+      pageElements.add(CoverSideInfo(
+        anime: widget.animeData!,
+        horizontal: true,
+      ));
     }
-
 
     // plance embed if available
     if (widget.animeData?.trailerUrl != null) {
@@ -134,16 +140,16 @@ class _AnimeDetailsPageState extends State<AnimeDetailsPage> {
       var relations = widget.animeData?.relations as List<AnimeRelation>;
 
       pageElements.add(const SizedBox(height: elementPadding));
-      pageElements.add(ElevatedRounded(child: Padding(
-        padding: const EdgeInsets.only(bottom: 16, left: 8, right:8, top: 16),
+      pageElements.add(ElevatedRounded(
+          child: Padding(
+        padding: const EdgeInsets.only(bottom: 16, left: 8, right: 8, top: 16),
         child: Shelf(
-            items: relations,
-            title: "Relations",
-            onItemPressed: _onRelatedAnimePressed,
-            itemsPerRow: getResponsiveGridItemCount(),
+          items: relations,
+          title: "Relations",
+          onItemPressed: _onRelatedAnimePressed,
+          itemsPerRow: getResponsiveGridItemCount(),
         ),
-      ))
-      );
+      )));
     }
 
     if (widget.animeData?.characters != null &&
@@ -151,10 +157,15 @@ class _AnimeDetailsPageState extends State<AnimeDetailsPage> {
       var characters = widget.animeData?.characters as List<AnimeCharacter>;
 
       pageElements.add(const SizedBox(height: elementPadding));
-      pageElements.add(ElevatedRounded(child: Padding(
-          padding: const EdgeInsets.only(bottom: 16, left: 8, right:8, top: 16),
-          child: Shelf(items: characters, title: "Characters", itemsPerRow: getResponsiveGridItemCount(),)))
-      );
+      pageElements.add(ElevatedRounded(
+          child: Padding(
+              padding:
+                  const EdgeInsets.only(bottom: 16, left: 8, right: 8, top: 16),
+              child: Shelf(
+                items: characters,
+                title: "Characters",
+                itemsPerRow: getResponsiveGridItemCount(),
+              ))));
     }
 
     pageElements.add(const SizedBox(height: elementPadding));

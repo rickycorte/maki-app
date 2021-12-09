@@ -8,7 +8,8 @@ class AnimeBaseInfo extends StatefulWidget {
 
   final bool expandedDesc;
 
-  AnimeBaseInfo({Key? key, required this.anime, this.expandedDesc = false}) : super(key: key);
+  AnimeBaseInfo({Key? key, required this.anime, this.expandedDesc = false})
+      : super(key: key);
 
   @override
   State<AnimeBaseInfo> createState() => AnimeBaseInfoState();
@@ -24,47 +25,52 @@ class AnimeBaseInfoState extends State<AnimeBaseInfo> {
   //Variabile per controllare la forma del botton con cui nascondere la descrizione
   IconData botton_description = Icons.keyboard_arrow_down_outlined;
 
-
   void _onAddItemToListButtonPress() async {
-
     // msg be generated before the add/remove methond changes the anime state
-    String msg = widget.anime!.isInUserList() ? "Removed ${widget.anime!.title} from your list" : "Added ${widget.anime!.title} to your list";
+    String msg = widget.anime!.isInUserList()
+        ? "Removed ${widget.anime!.title} from your list"
+        : "Added ${widget.anime!.title} to your list";
 
-    if(widget.anime!.isInUserList()) {
+    if (widget.anime!.isInUserList()) {
       // show dialog to ask confirmation
       await showDialog(
-          context: context,
-          builder: (ctx) => AlertDialog(
-            content: Text("Are you sure you want to remove `${widget.anime!.title}` from your list?"),
-            actions: [
-              TextButton(onPressed: () { Navigator.of(context).pop(); },
-                child: const Text("Cancel"),
-              ),
-              TextButton(onPressed: () async {
-                  // remove item
-                  await User.current!.removeFromList(widget.anime!);
-                  //dismiss dialog
-                  Navigator.of(context).pop();
-                  // show confirmation as a snackbar
-                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(msg),));
-                  // update page state
-                  setState(() {});
-                  },
-                child: const Text("Proceed"),
-              ),
-            ],
-          ),
+        context: context,
+        builder: (ctx) => AlertDialog(
+          content: Text(
+              "Are you sure you want to remove `${widget.anime!.title}` from your list?"),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text("Cancel"),
+            ),
+            TextButton(
+              onPressed: () async {
+                // remove item
+                await User.current!.removeFromList(widget.anime!);
+                //dismiss dialog
+                Navigator.of(context).pop();
+                // show confirmation as a snackbar
+                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                  content: Text(msg),
+                ));
+                // update page state
+                setState(() {});
+              },
+              child: const Text("Proceed"),
+            ),
+          ],
+        ),
       );
-
-
     } else {
       await User.current!.addToPlanning(widget.anime!);
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(msg),));
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text(msg),
+      ));
       setState(() {});
     }
-
   }
-
 
   Widget _buildTitleBlock(context) {
     // prepare data to output
@@ -83,11 +89,16 @@ class AnimeBaseInfoState extends State<AnimeBaseInfo> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Padding(
-            padding: const EdgeInsets.only(top: 15.0),
+            padding: const EdgeInsets.only(top: 15.0), // 15
             child: Text(
               widget.anime!.title,
               textAlign: TextAlign.center,
-              style: Theme.of(context).textTheme.headline5,
+              // ignore: prefer_const_constructors
+              style: TextStyle(
+                color: Colors.black,
+                fontWeight: FontWeight.w900,
+                fontSize: 24,
+              ),
             ),
           ),
           if (formattedGenres.isNotEmpty)
@@ -101,16 +112,18 @@ class AnimeBaseInfoState extends State<AnimeBaseInfo> {
                     fontWeight: FontWeight.bold),
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0),
-              child: SizedBox(
-                height: 45,
-                child: ElevatedButton (
-                  onPressed: _onAddItemToListButtonPress,
-                  child: Text(widget.anime!.isInUserList() ? "Remove From My List" :  "Add To My List"),
-                ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            child: SizedBox(
+              height: 45,
+              child: ElevatedButton(
+                onPressed: _onAddItemToListButtonPress,
+                child: Text(widget.anime!.isInUserList()
+                    ? "- Remove From My List"
+                    : "+ Add To My List"),
               ),
             ),
+          ),
         ],
       ),
     );
@@ -133,7 +146,6 @@ class AnimeBaseInfoState extends State<AnimeBaseInfo> {
     );
   }
 
-
   @override
   Widget build(BuildContext context) {
     const elementPadding = 20.0;
@@ -143,7 +155,7 @@ class AnimeBaseInfoState extends State<AnimeBaseInfo> {
         _buildTitleBlock(context),
         const SizedBox(height: elementPadding),
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+          padding: const EdgeInsets.only(right: 8.0, left: 8.0),
           child: Text(
             widget.anime!.description
                 .replaceAll("<br>", "\n")
@@ -153,28 +165,30 @@ class AnimeBaseInfoState extends State<AnimeBaseInfo> {
             textAlign: TextAlign.center,
           ),
         ),
-        !widget.expandedDesc ? Center(
-          // ignore: prefer_const_constructors
-          child: Padding(
-            padding: const EdgeInsets.only(top: 10),
-            // ignore: prefer_const_constructors
-            child: SizedBox(
-              height: 22.0,
-              width: 55.0,
-              child: IconButton(
+        !widget.expandedDesc
+            ? Center(
                 // ignore: prefer_const_constructors
-                icon: Icon(
-                  botton_description,
-                  size: 25,
-                  color: Colors.black,
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 10),
+                  // ignore: prefer_const_constructors
+                  child: SizedBox(
+                    height: 22.0,
+                    width: 55.0,
+                    child: IconButton(
+                      // ignore: prefer_const_constructors
+                      icon: Icon(
+                        botton_description,
+                        size: 25,
+                        color: Colors.black,
+                      ),
+                      onPressed: () {
+                        updateDescription();
+                      },
+                    ),
+                  ),
                 ),
-                onPressed: () {
-                  updateDescription();
-                },
-              ),
-            ),
-          ),
-        ) : const SizedBox.shrink(),
+              )
+            : const SizedBox.shrink(),
       ],
     );
   }
