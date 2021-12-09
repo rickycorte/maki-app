@@ -95,7 +95,6 @@ class AnimeBaseInfoState extends State<AnimeBaseInfo> {
               textAlign: TextAlign.center,
               // ignore: prefer_const_constructors
               style: TextStyle(
-                color: Colors.black,
                 fontWeight: FontWeight.w900,
                 fontSize: 24,
               ),
