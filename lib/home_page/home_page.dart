@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:maki/common/anime_cover_grid.dart';
 import 'package:maki/common/future_anime_cover_grid.dart';
+import 'package:maki/common/my_icons.dart';
 import 'package:maki/details_page/elevated_rounded.dart';
 import 'package:maki/models/anime.dart';
 import 'package:maki/models/user.dart';
 import 'package:maki/profile_page/option_tab.dart';
-
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -21,10 +21,9 @@ class _HomePageState extends State<HomePage> {
 
   late Color colorTextTabBar = Colors.white;
 
-
   _HomePageState() {
-      User.current?.onAnimeListUpdate.add(refreshUserList);
-      debugPrint("Added user list refresh callback");
+    User.current?.onAnimeListUpdate.add(refreshUserList);
+    debugPrint("Added user list refresh callback");
   }
 
   Future<bool> refreshGridBar() async {
@@ -39,24 +38,22 @@ class _HomePageState extends State<HomePage> {
   }
 
   int getResponsiveGridItemCount() {
-    var w = MediaQuery.of(context).size.width * MediaQuery.of(context).devicePixelRatio;
-    if(w > 1100) {
+    var w = MediaQuery.of(context).size.width *
+        MediaQuery.of(context).devicePixelRatio;
+    if (w > 1100) {
       return 4;
     }
     return 2;
   }
 
   Widget _futureRecommendationGrid(username) {
-
-
     _cachedRecommendations ??= fetchRecommendations(username);
 
-     return FutureAnimeCoverGrid(
+    return FutureAnimeCoverGrid(
       futureList: _cachedRecommendations as Future<List<Anime>>,
       onRefreshCallback: refreshGridBar,
       elementsPerRow: getResponsiveGridItemCount(),
     );
-
   }
 
   Widget _userList(BuildContext context) {
@@ -71,43 +68,46 @@ class _HomePageState extends State<HomePage> {
               padding: const EdgeInsets.only(top: 5.0, left: 5, right: 5),
               child: ElevatedRounded(
                 child: ClipRRect(
-                  borderRadius: const BorderRadius.all(Radius.circular(25)), // clip animations
+                  borderRadius: const BorderRadius.all(
+                      Radius.circular(25)), // clip animations
                   child: TabBar(
-                      labelColor: Colors.white,
-                      unselectedLabelColor: Theme.of(context).textTheme.bodyText1!.color ?? Colors.black,
-                      indicator: const BoxDecoration(
-                        borderRadius: BorderRadius.all(Radius.circular(25)),
-                        color: Colors.red,
-                      ),
-                      // ignore: prefer_const_literals_to_create_immutables
-                      tabs: [
-                        Tab(
-                          child: Align(
-                            child: Text("Watching",
-                                style: TextStyle(fontSize: 13)),
-                          ),
-                        ),
-                        Tab(
-                          child: Align(
-                            child: Text("Complete",
-                                style: TextStyle(fontSize: 13)),
-                          ),
-                        ),
-                        Tab(
-                          child: Align(
-                            child: Text("Planning",
-                                style: TextStyle(fontSize: 13)),
-                          ),
-                        ),
-                        Tab(
-                          child: Align(
-                            alignment: Alignment.center,
-                            child:
-                            Text("Dropped", style:TextStyle(fontSize: 13)),
-                          ),
-                        ),
-                      ],
+                    labelColor: Colors.white,
+                    unselectedLabelColor:
+                        Theme.of(context).textTheme.bodyText1!.color ??
+                            Colors.black,
+                    indicator: const BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(25)),
+                      color: Colors.red,
                     ),
+                    // ignore: prefer_const_literals_to_create_immutables
+                    tabs: [
+                      Tab(
+                        child: Align(
+                          child:
+                              Text("Watching", style: TextStyle(fontSize: 13)),
+                        ),
+                      ),
+                      Tab(
+                        child: Align(
+                          child:
+                              Text("Complete", style: TextStyle(fontSize: 13)),
+                        ),
+                      ),
+                      Tab(
+                        child: Align(
+                          child:
+                              Text("Planning", style: TextStyle(fontSize: 13)),
+                        ),
+                      ),
+                      Tab(
+                        child: Align(
+                          alignment: Alignment.center,
+                          child:
+                              Text("Dropped", style: TextStyle(fontSize: 13)),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -142,7 +142,10 @@ class _HomePageState extends State<HomePage> {
       case 1:
         return _userList(context);
       case 2:
-        return OptionsTabPage(nome: User.current?.username ?? 'Test User', profilePicture: User.current?.profilePicture,);
+        return OptionsTabPage(
+          nome: User.current?.username ?? 'Test User',
+          profilePicture: User.current?.profilePicture,
+        );
       default:
         return _futureRecommendationGrid(User.current?.username ?? 'xDevily');
     }
@@ -165,10 +168,12 @@ class _HomePageState extends State<HomePage> {
         body: _getSelectedTab(context),
         bottomNavigationBar: BottomNavigationBar(
           items: const [
-            BottomNavigationBarItem(icon: Icon(Icons.star), label: "For You"),
-            BottomNavigationBarItem(icon: Icon(Icons.list), label: "My List"),
             BottomNavigationBarItem(
-                icon: Icon(Icons.settings), label: "Options"),
+                icon: Icon(MyIcons.favourite_Icon), label: "For You"),
+            BottomNavigationBarItem(
+                icon: Icon(MyIcons.viewList_Icon), label: "My List"),
+            BottomNavigationBarItem(
+                icon: Icon(MyIcons.settings_Icon), label: "Options"),
           ],
           onTap: _onNavigationTabChange,
           currentIndex: _selectedPageIndex,
