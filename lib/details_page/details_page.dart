@@ -85,10 +85,14 @@ class _AnimeDetailsPageState extends State<AnimeDetailsPage> {
       pageElements.add(const SizedBox(height: elementPadding));
 
       // title box
-      pageElements.add(ElevatedRounded(
+      pageElements.add(
+        ElevatedRounded(
           child: Padding(
-              padding: const EdgeInsets.only(bottom: 12),
-              child: AnimeBaseInfo(anime: widget.animeData))));
+            padding: const EdgeInsets.only(bottom: 12),
+            child: AnimeBaseInfo(anime: widget.animeData),
+          ),
+        ),
+      );
     } else {
       // phone horizontal and tablet layout here
       pageElements.add(Container(
