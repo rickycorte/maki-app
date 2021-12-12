@@ -11,5 +11,5 @@ class MyIcons {
   static const IconData viewList_Icon =
       IconData(0xe802, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData favourite_Icon =
-      IconData(0xe803, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+      IconData(0xe804, fontFamily: _kFontFam, fontPackage: _kFontPkg);
 }

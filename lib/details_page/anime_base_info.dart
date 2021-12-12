@@ -25,6 +25,9 @@ class AnimeBaseInfoState extends State<AnimeBaseInfo> {
   //Variabile per controllare la forma del botton con cui nascondere la descrizione
   IconData botton_description = Icons.keyboard_arrow_down_outlined;
 
+  //Variabile per cambiare il colore della freccia che nasconde la descrizione
+  //Color arrow_icon_color
+
   void _onAddItemToListButtonPress() async {
     // msg be generated before the add/remove methond changes the anime state
     String msg = widget.anime!.isInUserList()
@@ -118,8 +121,8 @@ class AnimeBaseInfoState extends State<AnimeBaseInfo> {
               child: ElevatedButton(
                 onPressed: _onAddItemToListButtonPress,
                 child: Text(widget.anime!.isInUserList()
-                    ? "- Remove From My List"
-                    : "+ Add To My List"),
+                    ? "Remove From My List"
+                    : "Add To My List"),
               ),
             ),
           ),
@@ -178,7 +181,6 @@ class AnimeBaseInfoState extends State<AnimeBaseInfo> {
                       icon: Icon(
                         botton_description,
                         size: 25,
-                        color: Colors.black,
                       ),
                       onPressed: () {
                         updateDescription();
