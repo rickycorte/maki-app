@@ -169,9 +169,9 @@ class _HomePageState extends State<HomePage> {
         bottomNavigationBar: BottomNavigationBar(
           items: const [
             BottomNavigationBarItem(
-                icon: Icon(MyIcons.favourite_Icon), label: "For You"),
+                icon: Icon(MyIcons.favourite_Icon), label: "For you"),
             BottomNavigationBarItem(
-                icon: Icon(MyIcons.viewList_Icon), label: "My List"),
+                icon: Icon(MyIcons.viewList_Icon), label: "My list"),
             BottomNavigationBarItem(
                 icon: Icon(MyIcons.settings_Icon), label: "Options"),
           ],
