@@ -22,9 +22,15 @@ class ThemeChanger with ChangeNotifier {
   );
 
   static ThemeData darkTheme = ThemeData(
-    brightness: Brightness.dark,
-    backgroundColor: Colors.black54,
-    primarySwatch: Colors.red,
+    //brightness: Brightness.dark,
+    //backgroundColor: Colors.black54,
+    //primarySwatch: Colors.red,
+    colorScheme: ColorScheme.fromSwatch(
+        primarySwatch: Colors.red,
+        accentColor: Colors.red,
+        brightness: Brightness.dark,
+        backgroundColor: Colors.black54
+    ),
     primaryColor: Colors.red,
     primaryColorDark: Colors.red,
     scaffoldBackgroundColor: const Color.fromRGBO(31, 29, 28, 1),

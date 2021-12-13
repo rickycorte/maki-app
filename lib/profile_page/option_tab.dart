@@ -118,6 +118,7 @@ class _OptionsTabPageState extends State<OptionsTabPage> {
     return Padding(
             padding: const EdgeInsets.only(top: 0),
             child: ListView (
+              primary: false,
               children: [
                 const SizedBox(height: 5),
                 Padding(
