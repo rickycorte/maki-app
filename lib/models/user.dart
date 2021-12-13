@@ -166,13 +166,17 @@ class User {
 
     anime.entryID = null;
 
-    // refetch list to update
-    getAnimeList(forceUpdate: true);
-
-    // send callback
-    onAnimeListUpdate.call();
+    // do updates in background for smooth navigation
+   _updateListInBackground();
 
     return Future.value(true);
+  }
+
+  Future<void> _updateListInBackground() async {
+    // refetch list to update
+    await getAnimeList(forceUpdate: true);
+    // send callback to home page
+    onAnimeListUpdate.call();
   }
 
 
@@ -196,7 +200,7 @@ class User {
             _hasAnimeInSublist(_animeList!.dropped, anime));
   }
 
-  /// update the entry value for the anime if fresent in the list
+  /// update the entry value for the anime if present in the list
   /// otherwise leave the previous value
   void updateAnimeEntryList(Anime a) {
     hasAnimeInList(a);
