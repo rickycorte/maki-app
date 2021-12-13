@@ -76,6 +76,7 @@ class _videoPlayerState extends State<YoutubeEmbedded> {
               imageUrl: "$thumbLink/hqdefault.jpg",
               fit: BoxFit.fitWidth,
               placeholder: (ctx, prog) => Skeleton(height: 250),
+              errorWidget: (ctx, prog, ext) => Image.asset("assets/images/placeholder-image.jpg", fit: BoxFit.fitWidth),
             ),
           ),
           Positioned.fill(
