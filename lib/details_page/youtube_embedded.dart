@@ -28,6 +28,10 @@ class _videoPlayerState extends State<YoutubeEmbedded> {
     }
     var id = videoUrl.length == 11 ? videoUrl : uri.queryParameters['v'];
 
+    if(id == null) {
+      return null;
+    }
+
     return 'https://img.youtube.com/vi/$id';
   }
 
