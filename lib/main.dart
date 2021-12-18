@@ -1,18 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:maki/anime_list_tab/anime_list_tab.dart';
-import 'package:maki/common/future_anime_cover_grid.dart';
 import 'package:maki/login_page/login_page.dart';
-import 'package:maki/models/anime.dart';
-import 'package:maki/common/anime_cover_grid.dart';
-import 'package:maki/demo_runner.dart';
 import 'package:maki/profile_page/theme_changer.dart';
 import 'package:provider/provider.dart';
-import 'common/custom_appbar.dart';
-import 'common/custom_bottom_bar.dart';
-import 'models/user.dart';
-import 'profile_page/option_tab.dart';
 import 'profile_page/theme_changer.dart';
-import 'package:provider/provider.dart';
 
 void main() {
   runApp(const MyApp());

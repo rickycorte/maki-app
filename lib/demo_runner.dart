@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:maki/details_page/details_page.dart';
-import 'package:maki/models/anime.dart';
 import 'login_page/login_page.dart';
 import 'main.dart';
 import 'models/anime_details.dart';
-import 'models/user.dart';
 
 void main() async {
   runApp(const DemoRunner());

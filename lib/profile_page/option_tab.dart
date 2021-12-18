@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:maki/details_page/elevated_rounded.dart';
 import 'package:maki/login_page/login_page.dart';
 import 'package:maki/models/user.dart';
-import 'package:maki/main.dart';
 import 'package:maki/profile_page/theme_changer.dart';
 import 'package:provider/provider.dart';
 

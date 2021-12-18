@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:maki/common/anime_cover_grid.dart';
 import 'package:maki/common/future_anime_cover_grid.dart';
 import 'package:maki/common/my_icons.dart';
 import 'package:maki/details_page/elevated_rounded.dart';

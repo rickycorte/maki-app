@@ -5,7 +5,6 @@ import 'package:maki/details_page/cover_side_info.dart';
 import 'package:maki/details_page/elevated_rounded.dart';
 import 'package:maki/details_page/footer_info.dart';
 import 'package:maki/details_page/shelf.dart';
-import 'package:maki/details_page/text_shelf.dart';
 import 'package:maki/details_page/youtube_embedded.dart';
 import 'package:maki/models/anime_character.dart';
 import 'package:maki/models/anime_details.dart';
