@@ -2,7 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:maki/common/custom_appbar.dart';
 import 'package:maki/details_page/cover_side_info.dart';
-import 'package:maki/details_page/elevated_rounded.dart';
+import 'package:maki/common/elevated_rounded.dart';
 import 'package:maki/details_page/footer_info.dart';
 import 'package:maki/details_page/shelf.dart';
 import 'package:maki/details_page/youtube_embedded.dart';

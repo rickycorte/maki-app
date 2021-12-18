@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:maki/common/future_anime_cover_grid.dart';
 import 'package:maki/common/my_icons.dart';
-import 'package:maki/details_page/elevated_rounded.dart';
+import 'package:maki/common/elevated_rounded.dart';
 import 'package:maki/models/anime.dart';
 import 'package:maki/models/user.dart';
 import 'package:maki/profile_page/option_tab.dart';

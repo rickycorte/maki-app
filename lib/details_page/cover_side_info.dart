@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:maki/details_page/text_shelf.dart';
 import 'package:maki/models/anime_details.dart';
 
-import 'elevated_rounded.dart';
+import '../common/elevated_rounded.dart';
 
 class CoverSideInfo extends StatelessWidget {
   final AnimeDetails anime;

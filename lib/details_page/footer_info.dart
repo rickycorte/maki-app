@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:maki/models/anime_details.dart';
 
-import 'elevated_rounded.dart';
+import '../common/elevated_rounded.dart';
 
 class FooterInfo extends StatelessWidget {
   final AnimeDetails anime;

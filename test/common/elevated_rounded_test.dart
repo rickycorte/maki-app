@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:maki/details_page/elevated_rounded.dart';
+import 'package:maki/common/elevated_rounded.dart';
 
 import 'package:maki/main.dart';
 
