@@ -83,7 +83,6 @@ class _FutureAnimeCoverGridState extends State<FutureAnimeCoverGrid> {
             );
           } else if (snapshot.hasData) {
             return _wrapWithRefreshIfAvailable(
-              //TODO: empty page
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 5.0),
                   child: AnimeCoverGrid(displayData: snapshot.data ?? [], elementsPerRow: widget.elementsPerRow,),

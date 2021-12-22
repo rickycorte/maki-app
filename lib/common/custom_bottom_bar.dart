@@ -6,7 +6,7 @@ class CustomBottomBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         gradient: LinearGradient(colors: [Colors.red, Colors.white]),
       ),
       child: BottomAppBar(
@@ -20,9 +20,9 @@ class CustomBottomBar extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                bottomIcon(Icon(Icons.star), "For You"),
-                bottomIcon(Icon(Icons.list), "My List"),
-                bottomIcon(Icon(Icons.settings), "Options")
+                bottomIcon(const Icon(Icons.star), "For You"),
+                bottomIcon(const Icon(Icons.list), "My List"),
+                bottomIcon(const Icon(Icons.settings), "Options")
               ],
             ),
           ),
@@ -31,12 +31,12 @@ class CustomBottomBar extends StatelessWidget {
     );
   }
 
-  Widget bottomIcon(Icon icona, String testo) {
+  Widget bottomIcon(Icon icon, String text) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        icona,
-        Text(testo),
+        icon,
+        Text(text),
       ],
     );
   }

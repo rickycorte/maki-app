@@ -80,25 +80,25 @@ class _HomePageState extends State<HomePage> {
                     ),
                     // ignore: prefer_const_literals_to_create_immutables
                     tabs: [
-                      Tab(
+                      const Tab(
                         child: Align(
                           child:
                               Text("Watching", style: TextStyle(fontSize: 13)),
                         ),
                       ),
-                      Tab(
+                      const Tab(
                         child: Align(
                           child:
                               Text("Complete", style: TextStyle(fontSize: 13)),
                         ),
                       ),
-                      Tab(
+                      const Tab(
                         child: Align(
                           child:
                               Text("Planning", style: TextStyle(fontSize: 13)),
                         ),
                       ),
-                      Tab(
+                      const Tab(
                         child: Align(
                           alignment: Alignment.center,
                           child:

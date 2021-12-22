@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:maki/common/anime_cover_grid.dart';
 import 'package:maki/common/rounded_cover.dart';
-import 'package:maki/details_page/shelf.dart';
 import 'package:maki/models/anime.dart';
-import 'package:maki/models/anime_character.dart';
 import 'package:network_image_mock/network_image_mock.dart';
 
 import '../utils.dart';

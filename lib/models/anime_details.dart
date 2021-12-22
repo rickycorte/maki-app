@@ -104,10 +104,8 @@ class AnimeDetails extends Anime {
           episodeMinutes: json["duration"],
           trailerUrl: _parseTrailer(json),
 
-          // TODO: parse the main one only (the 0 one should be the main but i'm not sure)
           studio:  _mainStudio(json["studios"]),
 
-          //TODO: fix null cases
           airStartDate: _fmtDate(json["startDate"]),
           airFinalDate: _fmtDate(json["endDate"]),
 
@@ -229,7 +227,6 @@ Future<AnimeDetails> fetchAnimeDetails(int animeID) async {
   } else {
     // If the server did not return a 200 OK response,
     // then throw an exception.
-    //TODO: creare una classe apposta per l'eccezione; servono classi per gli errori proprio di connettivita e classi per quando ci sono errori nella richiesta
     throw Exception('Failed to load the file');
   }
 }

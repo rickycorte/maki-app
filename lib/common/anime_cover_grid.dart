@@ -18,8 +18,6 @@ class AnimeCoverGrid extends StatefulWidget implements PreferredSizeWidget {
 
 
 class _AnimeCoverGridState extends State<AnimeCoverGrid> {
-  // e tappando sulla card poi viene aperta la pagina dei details
-  // TODO: cache images locally
   Widget _makeAnimeCard(Anime anime) {
     return RoundedCover(url: anime.coverUrl, title: anime.title, anilistID: anime.anilistID);
   }
